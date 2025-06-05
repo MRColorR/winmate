@@ -77,3 +77,5 @@ function Set-UISettings {
         Write-Log "Hidden files shown" "SUCCESS"
     }
 }
+
+Export-ModuleMember -Function *

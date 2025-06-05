@@ -131,3 +131,5 @@ function Install-CustomFont {
         Write-Log "Failed custom font install: $($FontConfig.name) - Error: $_" "ERROR"
     }
 }
+
+Export-ModuleMember -Function *

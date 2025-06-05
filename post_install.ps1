@@ -10,26 +10,29 @@ param(
     [string]$LogPath = "$PSScriptRoot\logs\postinstall.log"
 )
 
+$ScriptBaseDir = $PSScriptRoot # Define base directory for module paths
+
 # Ensure Admin Privileges
 If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Start-Process powershell.exe -ArgumentList "-ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
     Exit
 }
 
-# Import Importer Module
-$ScriptBaseDir = $PSScriptRoot # Define base directory for module paths
-. "$ScriptBaseDir\modules\importer.ps1" # Using $ScriptBaseDir for clarity and correctness
-Import-ModuleFromFolder -name "logging"
-Import-ModuleFromFolder -name "configuration"
-Import-ModuleFromFolder -name "providers"
-Import-ModuleFromFolder -name "debloat"
-Import-ModuleFromFolder -name "fonts"
-Import-ModuleFromFolder -name "apps"
-Import-ModuleFromFolder -name "settings"
-Import-ModuleFromFolder -name "cleanup"
-Import-ModuleFromFolder -name "updater"
+# New Module Import Mechanism
+Write-Host "DEBUG: post_install.ps1 - Importing modules..."
+Import-Module "$ScriptBaseDir\modules\logging.psm1"
+Import-Module "$ScriptBaseDir\modules\configuration.psm1"
+Import-Module "$ScriptBaseDir\modules\providers.psm1"
+Import-Module "$ScriptBaseDir\modules\debloat.psm1"
+Import-Module "$ScriptBaseDir\modules\fonts.psm1"
+Import-Module "$ScriptBaseDir\modules\apps.psm1"
+Import-Module "$ScriptBaseDir\modules\settings.psm1"
+Import-Module "$ScriptBaseDir\modules\cleanup.psm1"
+Import-Module "$ScriptBaseDir\modules\updater.psm1"
+Write-Host "DEBUG: post_install.ps1 - All modules imported."
 
 try {
+    # The debug lines below were added in a previous subtask.
     Write-Host "DEBUG: post_install.ps1 - About to call Initialize-Logging. Value of \$LogPath is '$LogPath'"
     Initialize-Logging -LogPath $LogPath
     Write-Host "DEBUG: post_install.ps1 - Returned from Initialize-Logging call."

@@ -106,3 +106,5 @@ function Install-ManualApp {
         Write-Log "Manual install failed for ${AppName}: $_" "ERROR"
     }
 }
+
+Export-ModuleMember -Function *

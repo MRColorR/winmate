@@ -25,3 +25,5 @@ function Check-LatestVersion {
         Write-Log "Could not check for updates: $_" "WARNING"
     }
 }
+
+Export-ModuleMember -Function *

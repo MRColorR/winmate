@@ -98,3 +98,4 @@ function Show-InstallationSummary {
 }
 
 Write-Host "DEBUG: logging.ps1 - End of script execution. Functions (Write-Log, Initialize-Logging, Show-InstallationSummary) should be defined now."
+Export-ModuleMember -Function *
