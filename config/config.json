@@ -89,6 +89,7 @@
         }
       }
     },
+    "repo": "https://github.com/MRColorR/winmate",
     "metadata": {
       "version": "1.0.0",
       "author": "Windows Post-Install Automation",

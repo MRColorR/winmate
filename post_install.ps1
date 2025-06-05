@@ -6,7 +6,7 @@
 #>
 
 param(
-    [string]$ConfigPath = "$PSScriptRoot\config.json",
+    [string]$ConfigPath = "$PSScriptRoot\config\config.json",
     [string]$LogPath = "$PSScriptRoot\logs\postinstall.log"
 )
 
