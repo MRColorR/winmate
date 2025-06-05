@@ -49,5 +49,3 @@ function Test-Configuration {
         Write-Log "Configuration validated successfully." "SUCCESS"
     }
 }
-
-Export-ModuleMember -Function *

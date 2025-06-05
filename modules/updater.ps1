@@ -9,7 +9,7 @@ function Check-LatestVersion {
         [hashtable]$Config
     )
 
-    $currentVersion = $Config.version ?? "v0.0.0"
+    if ($null -ne $Config.version) { $currentVersion = $Config.version } else { $currentVersion = "v0.0.0" }
     $apiUrl = "https://api.github.com/repos/$Repo/releases/latest"
 
     try {
@@ -25,5 +25,3 @@ function Check-LatestVersion {
         Write-Log "Could not check for updates: $_" "WARNING"
     }
 }
-
-Export-ModuleMember -Function *

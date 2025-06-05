@@ -81,5 +81,3 @@ function Remove-WindowsApplication {
         Write-Log "Error removing ${AppName}: $_" "ERROR"
     }
 }
-
-Export-ModuleMember -Function *

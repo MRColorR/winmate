@@ -128,8 +128,6 @@ function Install-CustomFont {
             Write-Log "Local custom font installed: $($FontConfig.name)" "SUCCESS"
         }
     } catch {
-        Write-Log "Failed custom font install: $($FontConfig.name) — $_" "ERROR"
+        Write-Log "Failed custom font install: $($FontConfig.name) - Error: $_" "ERROR"
     }
 }
-
-Export-ModuleMember -Function *

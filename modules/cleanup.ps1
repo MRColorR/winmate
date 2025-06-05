@@ -24,5 +24,3 @@ function Invoke-Cleanup {
         Write-Log "Cleanup encountered an error: $_" "WARNING"
     }
 }
-
-Export-ModuleMember -Function *

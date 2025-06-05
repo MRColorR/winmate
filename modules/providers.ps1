@@ -58,5 +58,3 @@ function Install-PackageProvider {
         }
     }
 }
-
-Export-ModuleMember -Function *
