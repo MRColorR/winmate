@@ -6,7 +6,7 @@
 #>
 
 param(
-    [string]$ConfigPath = "$PSScriptRoot\config.json",
+    [string]$ConfigPath = "$PSScriptRoot\config\config.json",
     [string]$LogPath = "$PSScriptRoot\logs\postinstall.log"
 )
 
@@ -26,7 +26,6 @@ Import-Module "$ScriptBaseDir\modules\providers.psm1"
 Import-Module "$ScriptBaseDir\modules\debloat.psm1"
 Import-Module "$ScriptBaseDir\modules\fonts.psm1"
 Import-Module "$ScriptBaseDir\modules\apps.psm1"
-Import-Module "$ScriptBaseDir\modules\settings.psm1"
 Import-Module "$ScriptBaseDir\modules\cleanup.psm1"
 Import-Module "$ScriptBaseDir\modules\updater.psm1"
 Write-Host "DEBUG: post_install.ps1 - All modules imported."
@@ -44,7 +43,7 @@ try {
 
     # Version Check
     if ($config.repo) {
-        Check-LatestVersion -Repo $config.repo -Config $config
+        Check-LatestVersion -Repo $config.repo
     } else {
         Write-Log "Repository not defined in config. Skipping version check." "WARNING"
     }
@@ -68,12 +67,6 @@ try {
     if ($config.PSObject.Properties.Name -contains 'apps' -and $null -ne $config.apps.enabled -and $config.apps.enabled -eq $true) {
         Write-Log "Running Application Installation Phase" "INFO"
         Install-Applications -Config $config
-    }
-
-    # Settings Phase
-    if ($config.PSObject.Properties.Name -contains 'settings' -and $null -ne $config.settings.enabled -and $config.settings.enabled -eq $true) {
-        Write-Log "Running System Settings Phase" "INFO"
-        Set-SystemConfiguration -Config $config # Call remains the same; adaptation handled in settings.psm1
     }
 
     # Cleanup
