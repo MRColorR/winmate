@@ -1,6 +1,7 @@
-# Import standard modules
-. "$PSScriptRoot\importer.ps1"
-Import-ModuleFromFolder -name "settings"
+# Module for logging utilities.
+# importer.ps1 should not be sourced here. It's sourced by the main post_install.ps1 script.
+# 'settings' module import was removed to prevent circular dependencies.
+# The param() block was removed; $global:LogPath is set by post_install.ps1 directly.
 
 <#!
 .SYNOPSIS
@@ -9,11 +10,8 @@ Import-ModuleFromFolder -name "settings"
     Provides timestamped logging with severity levels and fallback to temp file if log file is locked.
 #>
 
-param(
-    [string]$LogPath
-)
-
-$global:LogPath = $LogPath
+# $global:LogPath is expected to be set by the calling script (post_install.ps1)
+# before Initialize-Logging is invoked.
 $global:LogFallbackPath = "$env:TEMP\postinstall_fallback.log"
 $global:StartTime = Get-Date
 $global:ErrorCount = 0

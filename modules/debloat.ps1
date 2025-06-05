@@ -1,8 +1,3 @@
-# Import standard modules
-. "$PSScriptRoot\importer.ps1"
-Import-ModuleFromFolder -name "settings"
-Import-ModuleFromFolder -name "logging"
-
 <#!
 .SYNOPSIS
     Removes unnecessary or unwanted pre-installed applications
@@ -83,6 +78,8 @@ function Remove-WindowsApplication {
         }
 
     } catch {
-        Write-Log "Error removing $AppName: $_" "ERROR"
+        Write-Log "Error removing ${AppName}: $_" "ERROR"
     }
 }
+
+Export-ModuleMember -Function *

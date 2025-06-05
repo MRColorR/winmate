@@ -1,8 +1,3 @@
-# Import standard modules
-. "$PSScriptRoot\importer.ps1"
-Import-ModuleFromFolder -name "settings"
-Import-ModuleFromFolder -name "logging"
-
 <#!
 .SYNOPSIS
     Handles installation of Nerd Fonts and custom fonts
@@ -45,7 +40,7 @@ function Install-NerdFonts {
     $success = $false
 
     foreach ($method in $methods) {
-        Write-Log "Trying Nerd Font install via: $method" "INFO"
+        Write-Log "Trying Nerd Font install via: ${method}" "INFO"
         try {
             switch ($method) {
                 'chocolatey' {
@@ -70,7 +65,7 @@ function Install-NerdFonts {
                 }
             }
         } catch {
-            Write-Log "Failed using method: $method — $_" "WARNING"
+            Write-Log "Failed using method: ${method} — $_" "WARNING"
         }
     }
 
@@ -100,9 +95,9 @@ function Install-NerdFontsFromGitHub {
                 Copy-Item $_.FullName -Destination "$env:SystemRoot\Fonts" -Force
             }
 
-            Write-Log "Installed $font via GitHub" "SUCCESS"
+            Write-Log "Installed ${font} via GitHub" "SUCCESS"
         } catch {
-            Write-Log "Failed GitHub install: $font — $_" "ERROR"
+            Write-Log "Failed GitHub install: ${font} — $_" "ERROR"
         }
     }
 
@@ -136,3 +131,5 @@ function Install-CustomFont {
         Write-Log "Failed custom font install: $($FontConfig.name) — $_" "ERROR"
     }
 }
+
+Export-ModuleMember -Function *

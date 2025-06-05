@@ -1,8 +1,3 @@
-# Import standard modules
-. "$PSScriptRoot\importer.ps1"
-Import-ModuleFromFolder -name "settings"
-Import-ModuleFromFolder -name "logging"
-
 <#!
 .SYNOPSIS
     Checks GitHub for the latest version against config version
@@ -30,3 +25,5 @@ function Check-LatestVersion {
         Write-Log "Could not check for updates: $_" "WARNING"
     }
 }
+
+Export-ModuleMember -Function *
