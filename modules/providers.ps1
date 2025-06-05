@@ -1,8 +1,3 @@
-# Import standard modules
-. "$PSScriptRoot\importer.ps1"
-Import-ModuleFromFolder -name "settings"
-Import-ModuleFromFolder -name "logging"
-
 <#!
 .SYNOPSIS
     Handles detection and installation of package providers like winget, choco, scoop.
@@ -63,3 +58,5 @@ function Install-PackageProvider {
         }
     }
 }
+
+Export-ModuleMember -Function *

@@ -85,3 +85,5 @@ function Show-InstallationSummary {
     }
     Write-Log "=== END SUMMARY ===" "INFO"
 }
+
+Export-ModuleMember -Function *

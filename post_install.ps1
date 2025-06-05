@@ -18,15 +18,15 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 
 # Import Importer Module
 . "$PSScriptRoot\modules\importer.ps1"
-Import-ModuleFromFolder -name "Logging"
-Import-ModuleFromFolder -name "Configuration"
-Import-ModuleFromFolder -name "Providers"
-Import-ModuleFromFolder -name "Debloat"
-Import-ModuleFromFolder -name "Fonts"
-Import-ModuleFromFolder -name "Apps"
-Import-ModuleFromFolder -name "Settings"
-Import-ModuleFromFolder -name "Cleanup"
-Import-ModuleFromFolder -name "Updater"
+Import-ModuleFromFolder -name "logging"
+Import-ModuleFromFolder -name "configuration"
+Import-ModuleFromFolder -name "providers"
+Import-ModuleFromFolder -name "debloat"
+Import-ModuleFromFolder -name "fonts"
+Import-ModuleFromFolder -name "apps"
+Import-ModuleFromFolder -name "settings"
+Import-ModuleFromFolder -name "cleanup"
+Import-ModuleFromFolder -name "updater"
 
 try {
     Initialize-Logging -LogPath $LogPath

@@ -1,8 +1,3 @@
-# Import standard modules
-. "$PSScriptRoot\importer.ps1"
-Import-ModuleFromFolder -name "settings"
-Import-ModuleFromFolder -name "logging"
-
 <#!
 .SYNOPSIS
     Handles configuration loading and validation.
@@ -54,3 +49,5 @@ function Test-Configuration {
         Write-Log "Configuration validated successfully." "SUCCESS"
     }
 }
+
+Export-ModuleMember -Function *

@@ -1,8 +1,3 @@
-# Import standard modules
-. "$PSScriptRoot\importer.ps1"
-Import-ModuleFromFolder -name "settings"
-Import-ModuleFromFolder -name "logging"
-
 <#!
 .SYNOPSIS
     Handles application installations via winget, choco, scoop, or manual methods
@@ -81,7 +76,7 @@ function Install-SingleApp {
         }
         Write-Log "Installed $AppName via $Provider" "SUCCESS"
     } catch {
-        Write-Log "Failed installing $AppName ($Provider): $_" "ERROR"
+        Write-Log "Failed installing ${AppName} (${Provider}): $_" "ERROR"
     }
 }
 
@@ -108,6 +103,6 @@ function Install-ManualApp {
         Write-Log "Manual app installed: $AppName" "SUCCESS"
         Remove-Item $file -Force -ErrorAction SilentlyContinue
     } catch {
-        Write-Log "Manual install failed for $AppName: $_" "ERROR"
+        Write-Log "Manual install failed for ${AppName}: $_" "ERROR"
     }
 }
