@@ -30,7 +30,10 @@ Import-ModuleFromFolder -name "cleanup"
 Import-ModuleFromFolder -name "updater"
 
 try {
+    Write-Host "DEBUG: post_install.ps1 - About to call Initialize-Logging. Value of \$LogPath is '$LogPath'"
     Initialize-Logging -LogPath $LogPath
+    Write-Host "DEBUG: post_install.ps1 - Returned from Initialize-Logging call."
+    Write-Host "DEBUG: post_install.ps1 - About to call Write-Log for the first time."
     Write-Log "Windows Post-Installation started" "INFO"
 
     $config = Get-Configuration -Path $ConfigPath
