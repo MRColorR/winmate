@@ -1,8 +1,3 @@
-# Import standard modules
-. "$PSScriptRoot\importer.ps1"
-Import-ModuleFromFolder -name "settings"
-Import-ModuleFromFolder -name "logging"
-
 <#!
 .SYNOPSIS
     Checks GitHub for the latest version against config version
@@ -14,7 +9,7 @@ function Check-LatestVersion {
         [hashtable]$Config
     )
 
-    $currentVersion = $Config.version ?? "v0.0.0"
+    if ($null -ne $Config.version) { $currentVersion = $Config.version } else { $currentVersion = "v0.0.0" }
     $apiUrl = "https://api.github.com/repos/$Repo/releases/latest"
 
     try {
@@ -30,3 +25,5 @@ function Check-LatestVersion {
         Write-Log "Could not check for updates: $_" "WARNING"
     }
 }
+
+Export-ModuleMember -Function *

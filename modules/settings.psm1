@@ -1,8 +1,3 @@
-# Import standard modules
-. "$PSScriptRoot\importer.ps1"
-Import-ModuleFromFolder -name "settings"
-Import-ModuleFromFolder -name "logging"
-
 <#!
 .SYNOPSIS
     Applies system settings based on config
@@ -82,3 +77,5 @@ function Set-UISettings {
         Write-Log "Hidden files shown" "SUCCESS"
     }
 }
+
+Export-ModuleMember -Function *

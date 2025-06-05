@@ -1,6 +1,8 @@
-# Import standard modules
-. "$PSScriptRoot\importer.ps1"
-Import-ModuleFromFolder -name "settings"
+Write-Host "DEBUG: logging.ps1 - Start of script execution."
+# Module for logging utilities.
+# importer.ps1 should not be sourced here. It's sourced by the main post_install.ps1 script.
+# 'settings' module import was removed to prevent circular dependencies.
+# The param() block was removed; $global:LogPath is set by post_install.ps1 directly.
 
 <#!
 .SYNOPSIS
@@ -9,11 +11,8 @@ Import-ModuleFromFolder -name "settings"
     Provides timestamped logging with severity levels and fallback to temp file if log file is locked.
 #>
 
-param(
-    [string]$LogPath
-)
-
-$global:LogPath = $LogPath
+# $global:LogPath is expected to be set by the calling script (post_install.ps1)
+# before Initialize-Logging is invoked.
 $global:LogFallbackPath = "$env:TEMP\postinstall_fallback.log"
 $global:StartTime = Get-Date
 $global:ErrorCount = 0
@@ -51,10 +50,19 @@ function Write-Log {
 }
 
 function Initialize-Logging {
+    param([string]$LogPath)
+    $global:LogPath = $LogPath
+    Write-Host "DEBUG: Initialize-Logging - Started. Received LogPath: '$LogPath'"
+    Write-Host "DEBUG: Initialize-Logging - Global LogPath now set to: '$global:LogPath'"
     try {
+        # Note: $dir will be calculated on the next line. This message is for context before its calculation.
+        Write-Host "DEBUG: Initialize-Logging - Preparing to determine target log directory from: '$global:LogPath'"
         $dir = Split-Path -Parent $global:LogPath
+        Write-Host "DEBUG: Initialize-Logging - Target log directory determined as: '$dir'"
         if (-not (Test-Path $dir)) {
+            Write-Host "DEBUG: Initialize-Logging - Directory '$dir' does not exist. Attempting to create."
             New-Item -ItemType Directory -Path $dir -Force | Out-Null
+            Write-Host "DEBUG: Initialize-Logging - Directory creation attempt complete."
         }
 
         $header = @"
@@ -64,9 +72,12 @@ Started: $($global:StartTime.ToString('yyyy-MM-dd HH:mm:ss'))
 PowerShell Version: $($PSVersionTable.PSVersion)
 ================================================================================
 "@
+        Write-Host "DEBUG: Initialize-Logging - Attempting to write log header to: '$global:LogPath'"
         Set-Content -Path $global:LogPath -Value $header -Encoding UTF8
+        Write-Host "DEBUG: Initialize-Logging - Log header written."
         Write-Log "Logging initialized" "SUCCESS"
     } catch {
+        Write-Host "DEBUG: Initialize-Logging - ERROR CAUGHT: $($_.Exception.Message)"
         Add-Content -Path $global:LogFallbackPath -Value "[FALLBACK LOG] Logging initialization failed: $_" -Encoding UTF8
     }
 }
@@ -85,3 +96,6 @@ function Show-InstallationSummary {
     }
     Write-Log "=== END SUMMARY ===" "INFO"
 }
+
+Write-Host "DEBUG: logging.ps1 - End of script execution. Functions (Write-Log, Initialize-Logging, Show-InstallationSummary) should be defined now."
+Export-ModuleMember -Function *

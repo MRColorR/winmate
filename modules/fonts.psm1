@@ -1,8 +1,3 @@
-# Import standard modules
-. "$PSScriptRoot\importer.ps1"
-Import-ModuleFromFolder -name "settings"
-Import-ModuleFromFolder -name "logging"
-
 <#!
 .SYNOPSIS
     Handles installation of Nerd Fonts and custom fonts
@@ -20,12 +15,19 @@ function Install-Fonts {
 
     Write-Log "Beginning font installation..." "INFO"
 
-    if ($Config.fonts.nerdfonts.enabled) {
-        Install-NerdFonts -FontConfig $Config.fonts.nerdfonts
+    if ($Config.fonts.PSObject.Properties.Name -contains 'fonts-list' -and `
+        $null -ne $Config.fonts.'fonts-list' -and `
+        $Config.fonts.'fonts-list'.PSObject.Properties.Name -contains 'nerdfonts' -and `
+        $null -ne $Config.fonts.'fonts-list'.nerdfonts.enabled -and `
+        $Config.fonts.'fonts-list'.nerdfonts.enabled -eq $true) {
+        Install-NerdFonts -FontConfig $Config.fonts.'fonts-list'.nerdfonts
     }
 
-    if ($Config.fonts.custom) {
-        foreach ($font in $Config.fonts.custom) {
+    if ($Config.fonts.PSObject.Properties.Name -contains 'fonts-list' -and `
+        $null -ne $Config.fonts.'fonts-list' -and `
+        $Config.fonts.'fonts-list'.PSObject.Properties.Name -contains 'custom' -and `
+        $null -ne $Config.fonts.'fonts-list'.custom) {
+        foreach ($font in $Config.fonts.'fonts-list'.custom) {
             if ($font.enabled -eq $true) {
                 Install-CustomFont -FontConfig $font
             }
@@ -45,7 +47,7 @@ function Install-NerdFonts {
     $success = $false
 
     foreach ($method in $methods) {
-        Write-Log "Trying Nerd Font install via: $method" "INFO"
+        Write-Log "Trying Nerd Font install via: ${method}" "INFO"
         try {
             switch ($method) {
                 'chocolatey' {
@@ -70,7 +72,7 @@ function Install-NerdFonts {
                 }
             }
         } catch {
-            Write-Log "Failed using method: $method — $_" "WARNING"
+            Write-Log "Failed using method: ${method} — $_" "WARNING"
         }
     }
 
@@ -100,9 +102,9 @@ function Install-NerdFontsFromGitHub {
                 Copy-Item $_.FullName -Destination "$env:SystemRoot\Fonts" -Force
             }
 
-            Write-Log "Installed $font via GitHub" "SUCCESS"
+            Write-Log "Installed ${font} via GitHub" "SUCCESS"
         } catch {
-            Write-Log "Failed GitHub install: $font — $_" "ERROR"
+            Write-Log "Failed GitHub install: ${font} — $_" "ERROR"
         }
     }
 
@@ -133,6 +135,8 @@ function Install-CustomFont {
             Write-Log "Local custom font installed: $($FontConfig.name)" "SUCCESS"
         }
     } catch {
-        Write-Log "Failed custom font install: $($FontConfig.name) — $_" "ERROR"
+        Write-Log "Failed custom font install: $($FontConfig.name) - Error: $_" "ERROR"
     }
 }
+
+Export-ModuleMember -Function *

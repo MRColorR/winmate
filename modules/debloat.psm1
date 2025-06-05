@@ -1,8 +1,3 @@
-# Import standard modules
-. "$PSScriptRoot\importer.ps1"
-Import-ModuleFromFolder -name "settings"
-Import-ModuleFromFolder -name "logging"
-
 <#!
 .SYNOPSIS
     Removes unnecessary or unwanted pre-installed applications
@@ -20,7 +15,15 @@ function Invoke-WindowsDebloat {
 
     Write-Log "Starting Windows Debloat..." "INFO"
 
-    foreach ($app in $Config.apps.GetEnumerator()) {
+    if (-not ($Config.PSObject.Properties.Name -contains 'apps' -and `
+            $null -ne $Config.apps -and `
+            $Config.apps.PSObject.Properties.Name -contains 'apps-list' -and `
+            $null -ne $Config.apps.'apps-list')) {
+        Write-Log "Apps data ('apps-list') for debloating is missing or invalid in configuration." "WARNING"
+        return
+    }
+    $appsCollection = $Config.apps.'apps-list'
+    foreach ($app in $appsCollection.GetEnumerator()) {
         $name = $app.Key
         $settings = $app.Value
 
@@ -83,6 +86,8 @@ function Remove-WindowsApplication {
         }
 
     } catch {
-        Write-Log "Error removing $AppName: $_" "ERROR"
+        Write-Log "Error removing ${AppName}: $_" "ERROR"
     }
 }
+
+Export-ModuleMember -Function *

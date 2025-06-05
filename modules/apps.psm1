@@ -1,8 +1,3 @@
-# Import standard modules
-. "$PSScriptRoot\importer.ps1"
-Import-ModuleFromFolder -name "settings"
-Import-ModuleFromFolder -name "logging"
-
 <#!
 .SYNOPSIS
     Handles application installations via winget, choco, scoop, or manual methods
@@ -13,10 +8,17 @@ function Install-Applications {
         [hashtable]$Config
     )
 
-    $apps = $Config.apps
+    if (-not ($Config.PSObject.Properties.Name -contains 'apps' -and `
+            $null -ne $Config.apps -and `
+            $Config.apps.PSObject.Properties.Name -contains 'apps-list' -and `
+            $null -ne $Config.apps.'apps-list')) {
+        Write-Log "Apps data ('apps-list') missing or invalid in configuration." "WARNING"
+        return
+    }
+    $appsCollection = $Config.apps.'apps-list'
     $grouped = @{}
 
-    foreach ($app in $apps.GetEnumerator()) {
+    foreach ($app in $appsCollection.GetEnumerator()) {
         $name = $app.Key
         $data = $app.Value
 
@@ -58,18 +60,18 @@ function Install-SingleApp {
     try {
         switch ($Provider.ToLower()) {
             'winget' {
-                $id = $AppConfig.package_id ?? $AppName
+                if ($null -ne $AppConfig.package_id) { $id = $AppConfig.package_id } else { $id = $AppName }
                 winget install --id $id --silent --accept-package-agreements --accept-source-agreements
             }
             'chocolatey' {
-                $id = $AppConfig.package_name ?? $AppName
+                if ($null -ne $AppConfig.package_name) { $id = $AppConfig.package_name } else { $id = $AppName }
                 choco install $id -y
             }
             'scoop' {
                 if ($AppConfig.bucket) {
                     scoop bucket add $AppConfig.bucket -ErrorAction SilentlyContinue
                 }
-                $id = $AppConfig.package_name ?? $AppName
+                if ($null -ne $AppConfig.package_name) { $id = $AppConfig.package_name } else { $id = $AppName }
                 scoop install $id
             }
             'manual' {
@@ -81,7 +83,7 @@ function Install-SingleApp {
         }
         Write-Log "Installed $AppName via $Provider" "SUCCESS"
     } catch {
-        Write-Log "Failed installing $AppName ($Provider): $_" "ERROR"
+        Write-Log "Failed installing ${AppName} (${Provider}): $_" "ERROR"
     }
 }
 
@@ -92,7 +94,7 @@ function Install-ManualApp {
     )
 
     $url = $AppConfig.download_url
-    $args = $AppConfig.install_args ?? "/S"
+    if ($null -ne $AppConfig.install_args) { $args = $AppConfig.install_args } else { $args = "/S" }
     $file = Join-Path $env:TEMP (Split-Path $url -Leaf)
 
     try {
@@ -108,6 +110,8 @@ function Install-ManualApp {
         Write-Log "Manual app installed: $AppName" "SUCCESS"
         Remove-Item $file -Force -ErrorAction SilentlyContinue
     } catch {
-        Write-Log "Manual install failed for $AppName: $_" "ERROR"
+        Write-Log "Manual install failed for ${AppName}: $_" "ERROR"
     }
 }
+
+Export-ModuleMember -Function *

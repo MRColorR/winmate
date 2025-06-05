@@ -10,26 +10,33 @@ param(
     [string]$LogPath = "$PSScriptRoot\logs\postinstall.log"
 )
 
+$ScriptBaseDir = $PSScriptRoot # Define base directory for module paths
+
 # Ensure Admin Privileges
 If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Start-Process powershell.exe -ArgumentList "-ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
     Exit
 }
 
-# Import Importer Module
-. "$PSScriptRoot\modules\importer.ps1"
-Import-ModuleFromFolder -name "Logging"
-Import-ModuleFromFolder -name "Configuration"
-Import-ModuleFromFolder -name "Providers"
-Import-ModuleFromFolder -name "Debloat"
-Import-ModuleFromFolder -name "Fonts"
-Import-ModuleFromFolder -name "Apps"
-Import-ModuleFromFolder -name "Settings"
-Import-ModuleFromFolder -name "Cleanup"
-Import-ModuleFromFolder -name "Updater"
+# New Module Import Mechanism
+Write-Host "DEBUG: post_install.ps1 - Importing modules..."
+Import-Module "$ScriptBaseDir\modules\logging.psm1"
+Import-Module "$ScriptBaseDir\modules\configuration.psm1"
+Import-Module "$ScriptBaseDir\modules\providers.psm1"
+Import-Module "$ScriptBaseDir\modules\debloat.psm1"
+Import-Module "$ScriptBaseDir\modules\fonts.psm1"
+Import-Module "$ScriptBaseDir\modules\apps.psm1"
+Import-Module "$ScriptBaseDir\modules\settings.psm1"
+Import-Module "$ScriptBaseDir\modules\cleanup.psm1"
+Import-Module "$ScriptBaseDir\modules\updater.psm1"
+Write-Host "DEBUG: post_install.ps1 - All modules imported."
 
 try {
+    # The debug lines below were added in a previous subtask.
+    Write-Host "DEBUG: post_install.ps1 - About to call Initialize-Logging. Value of \$LogPath is '$LogPath'"
     Initialize-Logging -LogPath $LogPath
+    Write-Host "DEBUG: post_install.ps1 - Returned from Initialize-Logging call."
+    Write-Host "DEBUG: post_install.ps1 - About to call Write-Log for the first time."
     Write-Log "Windows Post-Installation started" "INFO"
 
     $config = Get-Configuration -Path $ConfigPath
@@ -46,27 +53,27 @@ try {
     Ensure-PackageProviders
 
     # Debloat Phase
-    if ($config.steps.debloat.enabled) {
+    if ($config.PSObject.Properties.Name -contains 'debloat' -and $null -ne $config.debloat.enabled -and $config.debloat.enabled -eq $true) {
         Write-Log "Running Debloat Phase" "INFO"
         Invoke-WindowsDebloat -Config $config
     }
 
     # Fonts Phase
-    if ($config.steps.fonts.enabled) {
+    if ($config.PSObject.Properties.Name -contains 'fonts' -and $null -ne $config.fonts.enabled -and $config.fonts.enabled -eq $true) {
         Write-Log "Running Font Installation Phase" "INFO"
         Install-Fonts -Config $config
     }
 
     # Applications Phase
-    if ($config.steps.apps.enabled) {
+    if ($config.PSObject.Properties.Name -contains 'apps' -and $null -ne $config.apps.enabled -and $config.apps.enabled -eq $true) {
         Write-Log "Running Application Installation Phase" "INFO"
         Install-Applications -Config $config
     }
 
     # Settings Phase
-    if ($config.steps.settings.enabled) {
+    if ($config.PSObject.Properties.Name -contains 'settings' -and $null -ne $config.settings.enabled -and $config.settings.enabled -eq $true) {
         Write-Log "Running System Settings Phase" "INFO"
-        Set-SystemConfiguration -Config $config
+        Set-SystemConfiguration -Config $config # Call remains the same; adaptation handled in settings.psm1
     }
 
     # Cleanup
