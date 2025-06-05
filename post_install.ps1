@@ -43,13 +43,10 @@ try {
 
     # Version Check
     if ($config.repo) {
-        Check-LatestVersion -Repo $config.repo
+        Check-LatestVersion -Config $config
     } else {
         Write-Log "Repository not defined in config. Skipping version check." "WARNING"
     }
-
-    # Providers
-    Ensure-PackageProviders
 
     # Debloat Phase
     if ($config.PSObject.Properties.Name -contains 'debloat' -and $null -ne $config.debloat.enabled -and $config.debloat.enabled -eq $true) {

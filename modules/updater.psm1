@@ -5,11 +5,24 @@
 
 function Check-LatestVersion {
     param(
-        [string]$Repo = "YourUser/YourRepo",
-        [hashtable]$Config
+        [PSObject]$Config
     )
 
-    if ($null -ne $Config.version) { $currentVersion = $Config.version } else { $currentVersion = "v0.0.0" }
+    # Extract user and repo name from the full repo URL
+    if ($Config.metadata.repo -match "github\.com/([^/]+)/([^/]+)") {
+        $user = $matches[1]
+        $repoName = $matches[2]
+        $Repo = "$user/$repoName"
+        Write-Log "Checking for updates for repository: $Repo" "INFO"
+    } else {
+        throw "Invalid repo URL format in config."
+    }
+
+    if ($null -ne $Config.metadata.version) { 
+        $currentVersion = $Config.metadata.version 
+    } else { 
+        $currentVersion = "v0.0.0" 
+    }
     $apiUrl = "https://api.github.com/repos/$Repo/releases/latest"
 
     try {

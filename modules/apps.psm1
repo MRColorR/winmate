@@ -5,9 +5,8 @@
 
 function Install-Applications {
     param(
-        [hashtable]$Config
+        [PSObject]$Config
     )
-
     if (-not ($Config.PSObject.Properties.Name -contains 'apps' -and `
             $null -ne $Config.apps -and `
             $Config.apps.PSObject.Properties.Name -contains 'apps-list' -and `
@@ -18,8 +17,8 @@ function Install-Applications {
     $appsCollection = $Config.apps.'apps-list'
     $grouped = @{}
 
-    foreach ($app in $appsCollection.GetEnumerator()) {
-        $name = $app.Key
+    foreach ($app in $appsCollection.PSObject.Properties) {
+        $name = $app.Name
         $data = $app.Value
 
         if ($data.install -eq $true) {
@@ -30,7 +29,7 @@ function Install-Applications {
             $grouped[$provider] += @{ Name = $name; Config = $data }
         }
     }
-
+    Write-Host "DEBUG: Grouped applications by provider: $($grouped.Keys -join ', ')"
     foreach ($provider in $grouped.Keys) {
         if (-not (Test-PackageProvider $provider)) {
             Write-Log "Provider '$provider' not found. Installing..." "INFO"
@@ -43,6 +42,7 @@ function Install-Applications {
         }
 
         foreach ($app in $grouped[$provider]) {
+            Write-Log "Installing application: $($app.Name) using provider: $provider" "INFO"
             Install-SingleApp -AppName $app.Name -AppConfig $app.Config -Provider $provider
         }
     }
@@ -53,7 +53,7 @@ function Install-Applications {
 function Install-SingleApp {
     param(
         [string]$AppName,
-        [hashtable]$AppConfig,
+        [PSObject]$AppConfig,
         [string]$Provider
     )
 
@@ -90,7 +90,7 @@ function Install-SingleApp {
 function Install-ManualApp {
     param(
         [string]$AppName,
-        [hashtable]$AppConfig
+        [PSObject]$AppConfig
     )
 
     $url = $AppConfig.download_url

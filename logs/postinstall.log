@@ -1,0 +1,42 @@
+﻿================================================================================
+Windows Post-Installation Automation Script Log
+Started: 2025-06-05 21:44:21
+PowerShell Version: 5.1.26100.4061
+================================================================================
+[2025-06-05 21:44:21] [SUCCESS] Logging initialized
+[2025-06-05 21:44:21] [INFO] Windows Post-Installation started
+[2025-06-05 21:44:21] [INFO] Loading configuration from: C:\Users\matti\Downloads\winmate-main\winmate-main\config\config.json
+[2025-06-05 21:44:21] [SUCCESS] Configuration successfully loaded
+[2025-06-05 21:44:21] [INFO] Validating configuration structure...
+[2025-06-05 21:44:21] [SUCCESS] Configuration structure validated successfully.
+[2025-06-05 21:44:21] [WARNING] Repository not defined in config. Skipping version check.
+[2025-06-05 21:44:21] [INFO] Running Application Installation Phase
+[2025-06-05 21:44:21] [INFO] Installing application: Git using provider: winget
+[2025-06-05 21:45:22] [SUCCESS] Installed Git via winget
+[2025-06-05 21:45:22] [INFO] Installing application: NodeJS using provider: winget
+[2025-06-05 21:45:37] [SUCCESS] Installed NodeJS via winget
+[2025-06-05 21:45:37] [INFO] Installing application: Discord using provider: winget
+[2025-06-05 21:46:13] [SUCCESS] Installed Discord via winget
+[2025-06-05 21:46:13] [INFO] Installing application: PowerToys using provider: winget
+[2025-06-05 21:46:17] [SUCCESS] Installed PowerToys via winget
+[2025-06-05 21:46:17] [INFO] Installing application: WindowsTerminal using provider: winget
+[2025-06-05 21:46:18] [SUCCESS] Installed WindowsTerminal via winget
+[2025-06-05 21:46:18] [INFO] Installing application: OhMyPosh using provider: winget
+[2025-06-05 21:46:33] [SUCCESS] Installed OhMyPosh via winget
+[2025-06-05 21:46:33] [INFO] Installing application: VSCode using provider: winget
+[2025-06-05 21:46:35] [SUCCESS] Installed VSCode via winget
+[2025-06-05 21:46:35] [SUCCESS] Application installation complete.
+[2025-06-05 21:46:35] [INFO] Starting Cleanup Phase
+[2025-06-05 21:46:35] [INFO] Performing cleanup tasks...
+[2025-06-05 21:46:35] [SUCCESS] Temporary files and paths refreshed.
+[2025-06-05 21:46:35] [SUCCESS] Cleanup Phase Complete
+[2025-06-05 21:46:35] [INFO] === INSTALLATION SUMMARY ===
+[2025-06-05 21:46:35] [INFO] Duration: 00:02:14
+[2025-06-05 21:46:35] [SUCCESS] Successes: 13
+[2025-06-05 21:46:35] [WARNING] Warnings: 1
+[2025-06-05 21:46:35] [ERROR] Errors: 0
+[2025-06-05 21:46:35] [INFO] Log: C:\Users\matti\Downloads\winmate-main\winmate-main\logs\postinstall.log
+[2025-06-05 21:46:35] [INFO] === END SUMMARY ===
+[2025-06-05 22:00:38] [INFO] Loading configuration from: .\config\config.json
+[2025-06-05 22:00:38] [SUCCESS] Configuration successfully loaded
+[2025-06-05 22:00:48] [WARNING] Could not check for updates: {"message":"Not Found","documentation_url":"https://docs.github.com/rest/releases/releases#get-the-latest-release","status":"404"}

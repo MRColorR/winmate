@@ -5,7 +5,7 @@
 
 function Invoke-WindowsDebloat {
     param(
-        [hashtable]$Config
+        [PSObject]$Config
     )
 
     if (-not $Config.steps.debloat.enabled) {
@@ -39,7 +39,7 @@ function Invoke-WindowsDebloat {
 function Remove-WindowsApplication {
     param(
         [string]$AppName,
-        [hashtable]$AppConfig
+        [PSObject]$AppConfig
     )
 
     $removed = $false

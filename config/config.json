@@ -26,14 +26,14 @@
       "apps-list": {
         "Git": {
           "remove": false,
-          "install": false,
+          "install": true,
           "provider": "winget",
           "package_id": "Git.Git",
           "description": "Git version control system"
         },
         "NodeJS": {
           "remove": false,
-          "install": false,
+          "install": true,
           "provider": "winget",
           "package_id": "OpenJS.NodeJS",
           "description": "Node.js JavaScript runtime"
@@ -42,7 +42,7 @@
           "remove": false,
           "install": false,
           "provider": "winget",
-          "package_id": "Python.Python.3.11",
+          "package_id": "Python.Python.3.12",
           "description": "Python programming language"
         },
         "VLC": {
@@ -54,28 +54,28 @@
         },
         "Discord": {
           "remove": false,
-          "install": false,
+          "install": true,
           "provider": "winget",
           "package_id": "Discord.Discord",
           "description": "Discord communication platform"
         },
         "PowerToys": {
           "remove": false,
-          "install": false,
+          "install": true,
           "provider": "winget",
           "package_id": "Microsoft.PowerToys",
           "description": "Microsoft PowerToys utilities"
         },
         "WindowsTerminal": {
           "remove": false,
-          "install": false,
+          "install": true,
           "provider": "winget",
           "package_id": "Microsoft.WindowsTerminal",
           "description": "Windows Terminal"
         },
         "OhMyPosh": {
           "remove": false,
-          "install": false,
+          "install": true,
           "provider": "winget",
           "package_id": "JanDeDobbeleer.OhMyPosh",
           "description": "Oh My Posh prompt theme engine"
@@ -89,12 +89,12 @@
         }
       }
     },
-    "repo": "https://github.com/MRColorR/winmate",
     "metadata": {
+      "repo": "https://github.com/MRColorR/winmate",
       "version": "1.0.0",
-      "author": "Windows Post-Install Automation",
-      "description": "Configuration file for automated Windows post-installation setup",
       "last_updated": "2025-06-05",
+      "author": "Windows Post-Install Automation by MRColorR",
+      "description": "Configuration file for automated Windows post-installation setup",
       "compatibility": {
         "windows_versions": ["10", "11"],
         "powershell_version": "5.1+"

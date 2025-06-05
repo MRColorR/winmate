@@ -5,7 +5,7 @@
 
 function Install-Fonts {
     param(
-        [hashtable]$Config
+        [PSObject]$Config
     )
 
     if (-not $Config.steps.fonts.enabled) {
@@ -39,7 +39,7 @@ function Install-Fonts {
 
 function Install-NerdFonts {
     param(
-        [hashtable]$FontConfig
+        [PSObject]$FontConfig
     )
 
     $methods = @('chocolatey', 'scoop', 'github')
@@ -113,7 +113,7 @@ function Install-NerdFontsFromGitHub {
 
 function Install-CustomFont {
     param(
-        [hashtable]$FontConfig
+        [PSObject]$FontConfig
     )
 
     $path = $FontConfig.path
