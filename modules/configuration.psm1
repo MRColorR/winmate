@@ -17,7 +17,7 @@ function Get-Configuration {
     }
 
     try {
-        $json = Get-Content -Raw -Path $Path | ConvertFrom-Json -AsHashtable
+        $json = Get-Content -Raw -Path $Path | ConvertFrom-Json
         Write-Log "Configuration successfully loaded" "SUCCESS"
         return $json
     } catch {
@@ -29,7 +29,7 @@ function Get-Configuration {
 function Test-Configuration {
     param(
         [Parameter(Mandatory = $true)]
-        [hashtable]$Config
+        [psobject]$Config
     )
 
     Write-Log "Validating configuration structure..." "INFO"
@@ -37,7 +37,7 @@ function Test-Configuration {
     $missing = $false
 
     foreach ($section in $required) {
-        if (-not $Config.ContainsKey($section)) {
+        if (-not ($Config.PSObject.Properties.Name -contains $section)) {
             Write-Log "Missing section: $section" "ERROR"
             $missing = $true
         }
