@@ -17,7 +17,8 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 }
 
 # Import Importer Module
-. "$PSScriptRoot\modules\importer.ps1"
+$ScriptBaseDir = $PSScriptRoot # Define base directory for module paths
+. "$ScriptBaseDir\modules\importer.ps1" # Using $ScriptBaseDir for clarity and correctness
 Import-ModuleFromFolder -name "logging"
 Import-ModuleFromFolder -name "configuration"
 Import-ModuleFromFolder -name "providers"
