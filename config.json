@@ -1,0 +1,108 @@
+{
+  "steps": {
+    "debloat": {
+      "enabled": false,
+      "description": "Controls whether to remove unwanted pre-installed Windows applications"
+    },
+    "fonts": {
+      "enabled": false,
+      "description": "Handles installation of Nerd Fonts and custom fonts"
+    },
+    "apps": {
+      "enabled": true,
+      "description": "Manages installation or removal of specified applications"
+    },
+    "settings": {
+      "enabled": false,
+      "description": "Applies privacy, performance, UI, and other Windows system settings"
+    }
+  },
+  "fonts": {
+    "nerdfonts": {
+      "enabled": true,
+      "fonts": ["FiraCode", "CascadiaCode"]
+    },
+    "custom": [
+      {
+        "name": "Roboto Font",
+        "url": "https://fonts.google.com/download?family=Roboto",
+        "enabled": false
+      }
+    ]
+  },
+  "apps": {
+    "Git": {
+      "remove": false,
+      "install": false,
+      "provider": "winget",
+      "package_id": "Git.Git",
+      "description": "Git version control system"
+    },
+    "NodeJS": {
+      "remove": false,
+      "install": false,
+      "provider": "winget",
+      "package_id": "OpenJS.NodeJS",
+      "description": "Node.js JavaScript runtime"
+    },
+    "Python": {
+      "remove": false,
+      "install": false,
+      "provider": "winget",
+      "package_id": "Python.Python.3.11",
+      "description": "Python programming language"
+    },
+    "VLC": {
+      "remove": false,
+      "install": false,
+      "provider": "winget",
+      "package_id": "VideoLAN.VLC",
+      "description": "VLC media player"
+    },
+    "Discord": {
+      "remove": false,
+      "install": false,
+      "provider": "winget",
+      "package_id": "Discord.Discord",
+      "description": "Discord communication platform"
+    },
+    "PowerToys": {
+      "remove": false,
+      "install": false,
+      "provider": "winget",
+      "package_id": "Microsoft.PowerToys",
+      "description": "Microsoft PowerToys utilities"
+    },
+    "WindowsTerminal": {
+      "remove": false,
+      "install": false,
+      "provider": "winget",
+      "package_id": "Microsoft.WindowsTerminal",
+      "description": "Windows Terminal"
+    },
+    "OhMyPosh": {
+      "remove": false,
+      "install": false,
+      "provider": "winget",
+      "package_id": "JanDeDobbeleer.OhMyPosh",
+      "description": "Oh My Posh prompt theme engine"
+    },
+    "VSCode": {
+      "remove": false,
+      "install": true,
+      "provider": "winget",
+      "package_id": "Microsoft.VisualStudioCode",
+      "description": "Visual Studio Code editor"
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "author": "Windows Post-Install Automation",
+    "description": "Configuration file for automated Windows post-installation setup",
+    "last_updated": "2025-06-05",
+    "compatibility": {
+      "windows_versions": ["10", "11"],
+      "powershell_version": "5.1+"
+    }
+  }
+}
