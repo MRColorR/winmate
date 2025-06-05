@@ -15,12 +15,19 @@ function Install-Fonts {
 
     Write-Log "Beginning font installation..." "INFO"
 
-    if ($Config.fonts.nerdfonts.enabled) {
-        Install-NerdFonts -FontConfig $Config.fonts.nerdfonts
+    if ($Config.fonts.PSObject.Properties.Name -contains 'fonts-list' -and `
+        $null -ne $Config.fonts.'fonts-list' -and `
+        $Config.fonts.'fonts-list'.PSObject.Properties.Name -contains 'nerdfonts' -and `
+        $null -ne $Config.fonts.'fonts-list'.nerdfonts.enabled -and `
+        $Config.fonts.'fonts-list'.nerdfonts.enabled -eq $true) {
+        Install-NerdFonts -FontConfig $Config.fonts.'fonts-list'.nerdfonts
     }
 
-    if ($Config.fonts.custom) {
-        foreach ($font in $Config.fonts.custom) {
+    if ($Config.fonts.PSObject.Properties.Name -contains 'fonts-list' -and `
+        $null -ne $Config.fonts.'fonts-list' -and `
+        $Config.fonts.'fonts-list'.PSObject.Properties.Name -contains 'custom' -and `
+        $null -ne $Config.fonts.'fonts-list'.custom) {
+        foreach ($font in $Config.fonts.'fonts-list'.custom) {
             if ($font.enabled -eq $true) {
                 Install-CustomFont -FontConfig $font
             }

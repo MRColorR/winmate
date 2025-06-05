@@ -53,27 +53,27 @@ try {
     Ensure-PackageProviders
 
     # Debloat Phase
-    if ($config.steps.debloat.enabled) {
+    if ($config.PSObject.Properties.Name -contains 'debloat' -and $null -ne $config.debloat.enabled -and $config.debloat.enabled -eq $true) {
         Write-Log "Running Debloat Phase" "INFO"
         Invoke-WindowsDebloat -Config $config
     }
 
     # Fonts Phase
-    if ($config.steps.fonts.enabled) {
+    if ($config.PSObject.Properties.Name -contains 'fonts' -and $null -ne $config.fonts.enabled -and $config.fonts.enabled -eq $true) {
         Write-Log "Running Font Installation Phase" "INFO"
         Install-Fonts -Config $config
     }
 
     # Applications Phase
-    if ($config.steps.apps.enabled) {
+    if ($config.PSObject.Properties.Name -contains 'apps' -and $null -ne $config.apps.enabled -and $config.apps.enabled -eq $true) {
         Write-Log "Running Application Installation Phase" "INFO"
         Install-Applications -Config $config
     }
 
     # Settings Phase
-    if ($config.steps.settings.enabled) {
+    if ($config.PSObject.Properties.Name -contains 'settings' -and $null -ne $config.settings.enabled -and $config.settings.enabled -eq $true) {
         Write-Log "Running System Settings Phase" "INFO"
-        Set-SystemConfiguration -Config $config
+        Set-SystemConfiguration -Config $config # Call remains the same; adaptation handled in settings.psm1
     }
 
     # Cleanup

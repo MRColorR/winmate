@@ -8,10 +8,17 @@ function Install-Applications {
         [hashtable]$Config
     )
 
-    $apps = $Config.apps
+    if (-not ($Config.PSObject.Properties.Name -contains 'apps' -and `
+            $null -ne $Config.apps -and `
+            $Config.apps.PSObject.Properties.Name -contains 'apps-list' -and `
+            $null -ne $Config.apps.'apps-list')) {
+        Write-Log "Apps data ('apps-list') missing or invalid in configuration." "WARNING"
+        return
+    }
+    $appsCollection = $Config.apps.'apps-list'
     $grouped = @{}
 
-    foreach ($app in $apps.GetEnumerator()) {
+    foreach ($app in $appsCollection.GetEnumerator()) {
         $name = $app.Key
         $data = $app.Value
 
