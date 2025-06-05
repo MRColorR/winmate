@@ -43,7 +43,7 @@ try {
 
     # Version Check
     if ($config.repo) {
-        Check-LatestVersion -Repo $config.repo -Config $config
+        Check-LatestVersion -Repo $config.repo
     } else {
         Write-Log "Repository not defined in config. Skipping version check." "WARNING"
     }
