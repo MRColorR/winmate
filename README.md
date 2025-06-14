@@ -44,24 +44,24 @@ A comprehensive PowerShell-based automation solution for Windows post-installati
 3. **Run the script**:
    ```powershell
    # Run with default config.json
-   .\PostInstall.ps1
+   .\post_install.ps1
    
    # Run with custom configuration
-   .\PostInstall.ps1 -ConfigPath "custom-config.json" -LogPath "my-install.log"
+   .\post_install.ps1 -ConfigPath "custom-config.json" -LogPath "my-install.log"
    ```
 
 ### Advanced Usage
 
 ```powershell
 # Run with specific parameters
-.\PostInstall.ps1 -ConfigPath "config\enterprise.json" -LogPath "logs\$(Get-Date -Format 'yyyy-MM-dd_HH-mm-ss').log"
+.\post_install.ps1 -ConfigPath "config\enterprise.json" -LogPath "logs\$(Get-Date -Format 'yyyy-MM-dd_HH-mm-ss').log"
 
 # Check execution policy first
 Get-ExecutionPolicy
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 # Run as administrator (required)
-Start-Process PowerShell -Verb RunAs -ArgumentList "-File .\PostInstall.ps1"
+Start-Process PowerShell -Verb RunAs -ArgumentList "-File .\post_install.ps1"
 ```
 
 ## 📖 Configuration Guide
@@ -292,10 +292,10 @@ Some features, such as fetching the default install location from the WinGet man
 ```powershell
 # With token as parameter
 $token = "ghp_YourPersonalAccessTokenHere"
-.\PostInstall.ps1 -GitHubToken $token
+.\post_install.ps1 -GitHubToken $token
 
 # Or with config/token.json present in the config directory
-.\PostInstall.ps1
+.\post_install.ps1
 ```
 
 - If you do not provide a token and hit the rate limit, the script will log a warning and automatically retry after a delay.
