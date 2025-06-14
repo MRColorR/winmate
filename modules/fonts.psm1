@@ -8,26 +8,26 @@ function Install-Fonts {
         [PSObject]$Config
     )
 
-    if (-not $Config.steps.fonts.enabled) {
+    if (-not $Config.fonts_provisioner.enabled) {
         Write-Log "Fonts step is disabled in configuration." "INFO"
         return
     }
 
     Write-Log "Beginning font installation..." "INFO"
 
-    if ($Config.fonts.PSObject.Properties.Name -contains 'fonts-list' -and `
-            $null -ne $Config.fonts.'fonts-list' -and `
-            $Config.fonts.'fonts-list'.PSObject.Properties.Name -contains 'nerdfonts' -and `
-            $null -ne $Config.fonts.'fonts-list'.nerdfonts.enabled -and `
-            $Config.fonts.'fonts-list'.nerdfonts.enabled -eq $true) {
-        Install-NerdFonts -FontConfig $Config.fonts.'fonts-list'.nerdfonts
+    if ($Config.PSObject.Properties.Name -contains 'fonts_provisioner' -and `
+            $null -ne $Config.fonts_provisioner -and `
+            $Config.fonts_provisioner.PSObject.Properties.Name -contains 'nerdfonts' -and `
+            $null -ne $Config.fonts_provisioner.nerdfonts.enabled -and `
+            $Config.fonts_provisioner.nerdfonts.enabled -eq $true) {
+        Install-NerdFonts -FontConfig $Config.fonts_provisioner.nerdfonts
     }
 
-    if ($Config.fonts.PSObject.Properties.Name -contains 'fonts-list' -and `
-            $null -ne $Config.fonts.'fonts-list' -and `
-            $Config.fonts.'fonts-list'.PSObject.Properties.Name -contains 'custom' -and `
-            $null -ne $Config.fonts.'fonts-list'.custom) {
-        foreach ($font in $Config.fonts.'fonts-list'.custom) {
+    if ($Config.PSObject.Properties.Name -contains 'fonts_provisioner' -and `
+            $null -ne $Config.fonts_provisioner -and `
+            $Config.fonts_provisioner.PSObject.Properties.Name -contains 'custom' -and `
+            $null -ne $Config.fonts_provisioner.custom) {
+        foreach ($font in $Config.fonts_provisioner.custom) {
             if ($font.enabled -eq $true) {
                 Install-CustomFont -FontConfig $font
             }

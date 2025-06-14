@@ -67,19 +67,19 @@ try {
     }
 
     # Debloat Phase
-    if ($config.PSObject.Properties.Name -contains 'debloat' -and $null -ne $config.debloat.enabled -and $config.debloat.enabled -eq $true) {
+    if ($config.PSObject.Properties.Name -contains 'apps_debloater' -and $null -ne $config.apps_debloater.enabled -and $config.apps_debloater.enabled -eq $true) {
         Write-Log "Running Debloat Phase" "INFO"
         Invoke-WindowsDebloat -Config $config
     }
 
     # Fonts Phase
-    if ($config.PSObject.Properties.Name -contains 'fonts' -and $null -ne $config.fonts.enabled -and $config.fonts.enabled -eq $true) {
+    if ($config.PSObject.Properties.Name -contains 'fonts_provisioner' -and $null -ne $config.fonts_provisioner.enabled -and $config.fonts_provisioner.enabled -eq $true) {
         Write-Log "Running Font Installation Phase" "INFO"
         Install-Fonts -Config $config
     }
 
     # Applications Phase
-    if ($config.PSObject.Properties.Name -contains 'apps' -and $null -ne $config.apps.enabled -and $config.apps.enabled -eq $true) {
+    if ($config.PSObject.Properties.Name -contains 'apps_provisioner' -and $null -ne $config.apps_provisioner.enabled -and $config.apps_provisioner.enabled -eq $true) {
         if ($GitHubToken) {
             Write-Log "Running Application Installation Phase (GitHub token detected, using authenticated API requests)" "INFO"
         }

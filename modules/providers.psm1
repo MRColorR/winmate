@@ -9,9 +9,9 @@ function Test-PackageProvider {
     )
 
     switch ($Provider.ToLower()) {
-        'winget' { return (Get-Command winget -ErrorAction SilentlyContinue) -ne $null }
-        'chocolatey' { return (Get-Command choco -ErrorAction SilentlyContinue) -ne $null }
-        'scoop' { return (Get-Command scoop -ErrorAction SilentlyContinue) -ne $null }
+        'winget' { return $null -ne (Get-Command winget -ErrorAction SilentlyContinue) }
+        'chocolatey' { return $null -ne (Get-Command choco -ErrorAction SilentlyContinue) }
+        'scoop' { return $null -ne (Get-Command scoop -ErrorAction SilentlyContinue) }
         'msstore' { return $true }  # built-in
         default {
             Write-Log "Unknown provider: $Provider" "WARNING"
@@ -43,7 +43,7 @@ function Install-PackageProvider {
         'scoop' {
             try {
                 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-                iwr -useb get.scoop.sh | iex
+                Invoke-WebRequest -UseBasicParsing -Uri "https://get.scoop.sh" | Invoke-Expression
                 Write-Log "Scoop installed successfully" "SUCCESS"
             }
             catch {

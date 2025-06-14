@@ -8,14 +8,15 @@ function Install-Applications {
         [PSObject]$Config,
         [string]$GitHubToken = $null
     )
-    if (-not ($Config.PSObject.Properties.Name -contains 'apps' -and `
-                $null -ne $Config.apps -and `
-                $Config.apps.PSObject.Properties.Name -contains 'apps-list' -and `
-                $null -ne $Config.apps.'apps-list')) {
-        Write-Log "Apps data ('apps-list') missing or invalid in configuration." "WARNING"
+    if (-not ($Config.PSObject.Properties.Name -contains 'apps_provisioner' -and $Config.apps_provisioner.enabled -eq $true)) {
+        Write-Log "Apps provisioner is disabled or missing in configuration." "WARNING"
         return
     }
-    $appsCollection = $Config.apps.'apps-list'
+    if (-not ($Config.PSObject.Properties.Name -contains 'apps_list' -and $null -ne $Config.apps_list)) {
+        Write-Log "Apps data ('apps_list') missing or invalid in configuration." "WARNING"
+        return
+    }
+    $appsCollection = $Config.apps_list
     $grouped = @{}
 
     foreach ($app in $appsCollection.PSObject.Properties) {
@@ -130,7 +131,8 @@ function Get-DefaultInstallLocation {
     if ($AppName) {
         $finalPath = Join-Path $basePath $AppName
         return $finalPath
-    } else {
+    }
+    else {
         return $basePath
     }
 }
@@ -203,9 +205,11 @@ function Install-SingleApp {
                 if ($AppConfig.install_location -eq 'AUTO' -or $AppConfig.install_location -eq '') {
                     $install_path = Get-DefaultInstallLocation -PackageId $id -GitHubToken $GitHubToken -AppName $AppName
                     $locationArg = "--location `"$install_path`""
-                } elseif ($AppConfig.install_location -eq 'false') {
+                }
+                elseif ($AppConfig.install_location -eq 'false') {
                     $locationArg = ''
-                } elseif ($AppConfig.install_location -and $AppConfig.install_location -ne 'false') {
+                }
+                elseif ($AppConfig.install_location -and $AppConfig.install_location -ne 'false') {
                     $install_path = $AppConfig.install_location
                     $locationArg = "--location `"$install_path`""
                 }

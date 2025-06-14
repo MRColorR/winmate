@@ -72,31 +72,44 @@ The `config.json` file is organized into main sections:
 
 ```json
 {
-  "debloat": { "enabled": true },
-  "fonts": { "enabled": true },
-  "apps": { "enabled": true },
-  "settings": { "enabled": true }
+  "apps_debloater": { "enabled": true },
+  "fonts_provisioner": { "enabled": true },
+  "fonts_list": {
+    "nerdfonts": {
+      "enabled": true,
+      "fonts": ["FiraCode", "JetBrainsMono", "CascadiaCode"]
+    },
+    "custom": [
+      {
+        "name": "Inter Font",
+        "url": "https://github.com/rsms/inter/releases/download/v3.19/Inter-3.19.zip",
+        "enabled": true
+      }
+    ]
+  },
+  "apps_provisioner": { "enabled": true },
+  "apps_list": { /* all app definitions here */ },
+  "metadata": { /* ... */ }
 }
 ```
 
 ### Section Details
 
-#### 1. Debloat Section
+#### 1. Apps Debloater Section
 Controls removal of unwanted Windows applications:
 
 ```json
-"debloat": {
+"apps_debloater": {
   "enabled": true,
   "description": "Controls whether to remove unwanted Windows applications"
 }
 ```
 
-#### 2. Fonts Section
-Manages font installation including Nerd Fonts:
+#### 2. Fonts List (Top-Level)
+Manages font installation including Nerd Fonts and custom fonts:
 
 ```json
-"fonts": {
-  "enabled": true,
+"fonts_list": {
   "nerdfonts": {
     "enabled": true,
     "fonts": ["FiraCode", "JetBrainsMono", "CascadiaCode"]
@@ -111,18 +124,44 @@ Manages font installation including Nerd Fonts:
 }
 ```
 
-#### 3. Apps Section
+#### 3. Fonts Provisioner Section
+Controls whether the font installation phase runs:
+
+```json
+"fonts_provisioner": {
+  "enabled": true,
+  "description": "Handles installation of Nerd Fonts and custom fonts"
+}
+```
+
+#### 4. Apps Provisioner Section
 Controls application installation and removal:
 
 ```json
-"apps": {
+"apps_provisioner": {
   "enabled": true,
-  "AppName": {
+  "description": "Manages installation or removal of specified applications"
+}
+```
+
+#### 5. Apps List (Top-Level)
+All applications to be installed or removed are defined here:
+
+```json
+"apps_list": {
+  "YourApp": {
     "remove": false,
     "install": true,
     "provider": "winget",
-    "package_id": "Publisher.AppName",
-    "description": "Application description"
+    "package_id": "Publisher.YourApp",
+    "description": "Your application description"
+  },
+  "UnwantedApp": {
+    "remove": true,
+    "install": false,
+    "provider": "winget",
+    "package_id": "Publisher.UnwantedApp",
+    "description": "Unwanted application description"
   }
 }
 ```
@@ -134,28 +173,19 @@ Controls application installation and removal:
 - `msstore`: Microsoft Store
 - `manual`: Direct download and installation
 
-#### 4. Settings Section
-System configuration and optimization:
+#### 6. Metadata Section
+General information about the configuration and compatibility.
 
 ```json
-"settings": {
-  "enabled": true,
-  "privacy": {
-    "enabled": true,
-    "disable_telemetry": true,
-    "disable_location": true,
-    "disable_cortana": true
-  },
-  "performance": {
-    "enabled": true,
-    "disable_startup_delay": true,
-    "optimize_visual_effects": true
-  },
-  "ui": {
-    "enabled": true,
-    "dark_mode": true,
-    "show_file_extensions": true,
-    "show_hidden_files": true
+"metadata": {
+  "repo": "https://github.com/MRColorR/winmate",
+  "version": "1.0.0",
+  "last_updated": "2025-06-05",
+  "author": "Windows Post-Install Automation by MRColorR",
+  "description": "Configuration file for automated Windows post-installation setup",
+  "compatibility": {
+    "windows_versions": ["10", "11"],
+    "powershell_version": "5.1+"
   }
 }
 ```
@@ -184,8 +214,9 @@ To mark an application for removal:
 "UnwantedApp": {
   "remove": true,
   "install": false,
-  "provider": "msstore",
-  "description": "Application to be removed"
+  "provider": "winget",
+  "package_id": "Publisher.UnwantedApp",
+  "description": "Unwanted application description"
 }
 ```
 

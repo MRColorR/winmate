@@ -8,24 +8,21 @@ function Invoke-WindowsDebloat {
         [PSObject]$Config
     )
 
-    if (-not $Config.steps.debloat.enabled) {
+    if (-not ($Config.PSObject.Properties.Name -contains 'apps_debloater' -and $Config.apps_debloater.enabled -eq $true)) {
         Write-Log "Debloat step is disabled in configuration." "INFO"
         return
     }
 
     Write-Log "Starting Windows Debloat..." "INFO"
 
-    if (-not ($Config.PSObject.Properties.Name -contains 'apps' -and `
-                $null -ne $Config.apps -and `
-                $Config.apps.PSObject.Properties.Name -contains 'apps-list' -and `
-                $null -ne $Config.apps.'apps-list')) {
-        Write-Log "Apps data ('apps-list') for debloating is missing or invalid in configuration." "WARNING"
+    if (-not ($Config.PSObject.Properties.Name -contains 'apps_list' -and $null -ne $Config.apps_list)) {
+        Write-Log "Apps data ('apps_list') for debloating is missing or invalid in configuration." "WARNING"
         return
     }
-    $appsCollection = $Config.apps.'apps-list'
-    foreach ($app in $appsCollection.GetEnumerator()) {
-        $name = $app.Key
-        $settings = $app.Value
+    $appsCollection = $Config.apps_list
+    foreach ($property in $appsCollection.PSObject.Properties) {
+        $name = $property.Name
+        $settings = $property.Value
 
         if ($settings.remove -eq $true) {
             Write-Log "Attempting to remove: $name" "INFO"

@@ -1,229 +1,235 @@
 {
-    "debloat": {
-      "enabled": false,
-      "description": "Controls whether to remove unwanted pre-installed Windows applications"
-    },
-    "fonts": {
-      "enabled": false,
-      "description": "Handles installation of Nerd Fonts and custom fonts",
-      "fonts-list": {
-        "nerdfonts": {
-          "enabled": true,
-          "fonts": ["FiraCode", "CascadiaCode"]
-        },
-        "custom": [
-          {
-            "name": "Roboto Font",
-            "url": "https://fonts.google.com/download?family=Roboto",
-            "enabled": false
-          }
-        ]
-      }
-    },
-    "apps": {
+  "apps_debloater": {
+    "enabled": true,
+    "description": "Controls whether to remove unwanted pre-installed Windows applications"
+  },
+  "fonts_provisioner": {
+    "enabled": false,
+    "description": "Handles installation of Nerd Fonts and custom fonts"
+  },
+  "fonts_list": {
+    "nerdfonts": {
       "enabled": true,
-      "description": "Manages installation or removal of specified applications",
-      "apps-list": {
-        "BattleNet": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "Blizzard.BattleNet",
-          "description": "Blizzard Battle.net client",
-          "category": "Games",
-          "install_location": "AUTO"
-        },
-        "Chrome": {
-          "remove": false,
-          "install": false,
-          "provider": "winget",
-          "package_id": "Google.Chrome",
-          "description": "Google Chrome web browser",
-          "category": "Browser",
-          "install_location": false
-        },
-        "Discord": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "Discord.Discord",
-          "description": "Discord communication platform",
-          "category": "Communication",
-          "install_location": false
-        },
-        "DockerDesktop": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "Docker.DockerDesktop",
-          "description": "Docker Desktop for Windows",
-          "category": "Development",
-          "install_location": false
-        },
-        "EAApp": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "ElectronicArts.EADesktop",
-          "description": "EA App for PC gaming",
-          "category": "Games",
-          "install_location": false
-        },
-        "Firefox": {
-          "remove": false,
-          "install": false,
-          "provider": "winget",
-          "package_id": "Mozilla.Firefox",
-          "description": "Mozilla Firefox web browser",
-          "category": "Browser",
-          "install_location": false
-        },
-        "GOGGalaxy": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "GOG.Galaxy",
-          "description": "GOG Galaxy game client",
-          "category": "Games",
-          "install_location": false
-        },
-        "Git": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "Git.Git",
-          "description": "Git version control system",
-          "category": "Development",
-          "install_location": false
-        },
-        "GPG4Win": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "Gpg4win.Gpg4win",
-          "description": "Gpg4win encryption suite for Windows",
-          "category": "Security",
-          "install_location": false
-        },
-        "MobaXterm": {
-          "remove": false,
-          "install": false,
-          "provider": "winget",
-          "package_id": "Mobatek.MobaXterm",
-          "description": "MobaXterm terminal and SSH client",
-          "category": "Utilities",
-          "install_location": false
-        },
-        "NodeJS": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "OpenJS.NodeJS",
-          "description": "Node.js JavaScript runtime",
-          "category": "Development",
-          "install_location": false
-        },
-        "OhMyPosh": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "JanDeDobbeleer.OhMyPosh",
-          "description": "Oh My Posh prompt theme engine",
-          "category": "Utilities",
-          "install_location": false
-        },
-        "PowerToys": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "Microsoft.PowerToys",
-          "description": "Microsoft PowerToys utilities",
-          "category": "Utilities",
-          "install_location": false
-        },
-        "Python": {
-          "remove": false,
-          "install": false,
-          "provider": "winget",
-          "package_id": "Python.Python.3.12",
-          "description": "Python programming language",
-          "category": "Development",
-          "install_location": false
-        },
-        "RiotClient": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "RiotGames.RiotClient",
-          "description": "Riot Games client",
-          "category": "Games",
-          "install_location": false
-        },
-        "Steam": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "Valve.Steam",
-          "description": "Steam gaming platform",
-          "category": "Games",
-          "install_location": false
-        },
-        "Tabby": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "Eugeny.Tabby",
-          "description": "Tabby terminal emulator",
-          "category": "Utilities",
-          "install_location": false
-        },
-        "VLC": {
-          "remove": false,
-          "install": false,
-          "provider": "winget",
-          "package_id": "VideoLAN.VLC",
-          "description": "VLC media player",
-          "category": "Media",
-          "install_location": false
-        },
-        "VSCode": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "Microsoft.VisualStudioCode",
-          "description": "Visual Studio Code editor",
-          "category": "Development",
-          "install_location": false
-        },
-        "WhatsApp": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "WhatsApp.WhatsApp",
-          "description": "WhatsApp Desktop client",
-          "category": "Communication",
-          "install_location": false
-        },
-        "WindowsTerminal": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "Microsoft.WindowsTerminal",
-          "description": "Windows Terminal",
-          "category": "Utilities",
-          "install_location": false
-        }
-      }
+      "fonts": [
+        "FiraCode",
+        "CascadiaCode"
+      ]
     },
-    "metadata": {
-      "repo": "https://github.com/MRColorR/winmate",
-      "version": "1.0.0",
-      "last_updated": "2025-06-05",
-      "author": "Windows Post-Install Automation by MRColorR",
-      "description": "Configuration file for automated Windows post-installation setup",
-      "compatibility": {
-        "windows_versions": ["10", "11"],
-        "powershell_version": "5.1+"
+    "custom": [
+      {
+        "name": "Roboto Font",
+        "url": "https://fonts.google.com/download?family=Roboto",
+        "enabled": false
       }
+    ]
+  },
+  "apps_provisioner": {
+    "enabled": false,
+    "description": "Manages installation or removal of specified applications"
+  },
+  "apps_list": {
+    "BattleNet": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "Blizzard.BattleNet",
+      "description": "Blizzard Battle.net client",
+      "category": "Games",
+      "install_location": "AUTO"
+    },
+    "Chrome": {
+      "remove": false,
+      "install": false,
+      "provider": "winget",
+      "package_id": "Google.Chrome",
+      "description": "Google Chrome web browser",
+      "category": "Browser",
+      "install_location": false
+    },
+    "Discord": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "Discord.Discord",
+      "description": "Discord communication platform",
+      "category": "Communication",
+      "install_location": false
+    },
+    "DockerDesktop": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "Docker.DockerDesktop",
+      "description": "Docker Desktop for Windows",
+      "category": "Development",
+      "install_location": false
+    },
+    "EAApp": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "ElectronicArts.EADesktop",
+      "description": "EA App for PC gaming",
+      "category": "Games",
+      "install_location": false
+    },
+    "Firefox": {
+      "remove": false,
+      "install": false,
+      "provider": "winget",
+      "package_id": "Mozilla.Firefox",
+      "description": "Mozilla Firefox web browser",
+      "category": "Browser",
+      "install_location": false
+    },
+    "GOGGalaxy": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "GOG.Galaxy",
+      "description": "GOG Galaxy game client",
+      "category": "Games",
+      "install_location": false
+    },
+    "Git": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "Git.Git",
+      "description": "Git version control system",
+      "category": "Development",
+      "install_location": false
+    },
+    "GPG4Win": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "Gpg4win.Gpg4win",
+      "description": "Gpg4win encryption suite for Windows",
+      "category": "Security",
+      "install_location": false
+    },
+    "MobaXterm": {
+      "remove": false,
+      "install": false,
+      "provider": "winget",
+      "package_id": "Mobatek.MobaXterm",
+      "description": "MobaXterm terminal and SSH client",
+      "category": "Utilities",
+      "install_location": false
+    },
+    "NodeJS": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "OpenJS.NodeJS",
+      "description": "Node.js JavaScript runtime",
+      "category": "Development",
+      "install_location": false
+    },
+    "OhMyPosh": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "JanDeDobbeleer.OhMyPosh",
+      "description": "Oh My Posh prompt theme engine",
+      "category": "Utilities",
+      "install_location": false
+    },
+    "PowerToys": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "Microsoft.PowerToys",
+      "description": "Microsoft PowerToys utilities",
+      "category": "Utilities",
+      "install_location": false
+    },
+    "Python": {
+      "remove": false,
+      "install": false,
+      "provider": "winget",
+      "package_id": "Python.Python.3.12",
+      "description": "Python programming language",
+      "category": "Development",
+      "install_location": false
+    },
+    "RiotClient": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "RiotGames.RiotClient",
+      "description": "Riot Games client",
+      "category": "Games",
+      "install_location": false
+    },
+    "Steam": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "Valve.Steam",
+      "description": "Steam gaming platform",
+      "category": "Games",
+      "install_location": false
+    },
+    "Tabby": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "Eugeny.Tabby",
+      "description": "Tabby terminal emulator",
+      "category": "Utilities",
+      "install_location": false
+    },
+    "VLC": {
+      "remove": false,
+      "install": false,
+      "provider": "winget",
+      "package_id": "VideoLAN.VLC",
+      "description": "VLC media player",
+      "category": "Media",
+      "install_location": false
+    },
+    "VSCode": {
+      "remove": false,
+      "install": true,
+      "provider": "winget",
+      "package_id": "Microsoft.VisualStudioCode",
+      "description": "Visual Studio Code editor",
+      "category": "Development",
+      "install_location": false
+    },
+    "WhatsApp": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "WhatsApp.WhatsApp",
+      "description": "WhatsApp Desktop client",
+      "category": "Communication",
+      "install_location": false
+    },
+    "WindowsTerminal": {
+      "remove": false,
+      "install": true,
+      "provider": "winget",
+      "package_id": "Microsoft.WindowsTerminal",
+      "description": "Windows Terminal",
+      "category": "Utilities",
+      "install_location": false
     }
+  },
+  "metadata": {
+    "repo": "https://github.com/MRColorR/winmate",
+    "version": "1.0.0",
+    "last_updated": "2025-06-05",
+    "author": "Windows Post-Install Automation by MRColorR",
+    "description": "Configuration file for automated Windows post-installation setup",
+    "compatibility": {
+      "windows_versions": [
+        "10",
+        "11"
+      ],
+      "powershell_version": "5.1+"
+    }
+  }
 }
