@@ -15,12 +15,18 @@ function Get-Configuration {
         Write-Log "Configuration file not found: $Path" "ERROR"
         throw "Missing configuration file."
     }
+    # Optionally, check for token.json in the same directory as config.json for documentation or future use
+    $tokenPath = Join-Path (Split-Path $Path) 'token.json'
+    if (-not (Test-Path $tokenPath)) {
+        Write-Log "INFO: No token.json found in config directory. GitHub API requests will be unauthenticated unless a token is provided elsewhere." "INFO"
+    }
 
     try {
         $json = Get-Content -Raw -Path $Path | ConvertFrom-Json
         Write-Log "Configuration successfully loaded" "SUCCESS"
         return $json
-    } catch {
+    }
+    catch {
         Write-Log "Failed to parse configuration: $_" "ERROR"
         throw "Invalid configuration format."
     }
@@ -61,14 +67,16 @@ function Test-Configuration {
         # Check for 'enabled' key (boolean)
         if (-not ($section.PSObject.Properties.Name -contains 'enabled')) {
             $validationErrors.Add("CRITICAL: Section '$sectionName' is missing 'enabled' key.")
-        } elseif ($section.enabled -isnot [bool]) {
+        }
+        elseif ($section.enabled -isnot [bool]) {
             $validationErrors.Add("CRITICAL: Section '$sectionName.enabled' must be a boolean (true/false). Found: '$($section.enabled)'")
         }
 
         # Check for 'description' key (string)
         if (-not ($section.PSObject.Properties.Name -contains 'description')) {
             $validationErrors.Add("CRITICAL: Section '$sectionName' is missing 'description' key.")
-        } elseif ($section.description -isnot [string]) {
+        }
+        elseif ($section.description -isnot [string]) {
             $validationErrors.Add("CRITICAL: Section '$sectionName.description' must be a string. Found: '$($section.description)'")
         }
 
@@ -76,13 +84,15 @@ function Test-Configuration {
         if ($sectionName -eq 'fonts' -and ($section.PSObject.Properties.Name -contains 'enabled' -and $section.enabled -eq $true)) {
             if (-not ($section.PSObject.Properties.Name -contains 'fonts-list' -and $null -ne $section.'fonts-list' -and $section.'fonts-list' -is [System.Management.Automation.PSCustomObject])) {
                 $validationErrors.Add("CRITICAL: Section 'fonts' is enabled but 'fonts-list' is missing or not an object.")
-            } else {
+            }
+            else {
                 $fontsList = $section.'fonts-list'
 
                 # Validate 'nerdfonts' structure
                 if (-not ($fontsList.PSObject.Properties.Name -contains 'nerdfonts' -and $null -ne $fontsList.nerdfonts -and $fontsList.nerdfonts -is [System.Management.Automation.PSCustomObject])) {
                     $validationErrors.Add("CRITICAL: 'fonts.fonts-list.nerdfonts' is missing or not an object.")
-                } else {
+                }
+                else {
                     if (-not ($fontsList.nerdfonts.PSObject.Properties.Name -contains 'enabled' -and $fontsList.nerdfonts.enabled -is [bool])) {
                         $validationErrors.Add("CRITICAL: 'fonts.fonts-list.nerdfonts' is missing 'enabled' (boolean) key.")
                     }
@@ -94,7 +104,8 @@ function Test-Configuration {
                 # Validate 'custom' structure
                 if (-not ($fontsList.PSObject.Properties.Name -contains 'custom' -and $null -ne $fontsList.custom -and $fontsList.custom -is [array])) {
                     $validationErrors.Add("CRITICAL: 'fonts.fonts-list.custom' is missing or not an array.")
-                } else {
+                }
+                else {
                     foreach ($customFontItem in $fontsList.custom) {
                         if ($null -eq $customFontItem -or $customFontItem -isnot [System.Management.Automation.PSCustomObject]) {
                             $validationErrors.Add("CRITICAL: An item in 'fonts.fonts-list.custom' is not a valid object.")
@@ -118,7 +129,8 @@ function Test-Configuration {
         if ($sectionName -eq 'apps' -and ($section.PSObject.Properties.Name -contains 'enabled' -and $section.enabled -eq $true)) {
             if (-not ($section.PSObject.Properties.Name -contains 'apps-list' -and $null -ne $section.'apps-list' -and $section.'apps-list' -is [System.Management.Automation.PSCustomObject])) {
                 $validationErrors.Add("CRITICAL: Section 'apps' is enabled but 'apps-list' is missing or not an object.")
-            } else {
+            }
+            else {
                 $appsList = $section.'apps-list'
                 # Iterate over each application defined in apps-list
                 foreach ($appName in $appsList.PSObject.Properties.Name) {
@@ -158,7 +170,8 @@ function Test-Configuration {
     if ($validationErrors.Count -gt 0) {
         foreach ($err in $validationErrors) { Write-Log $err "ERROR" }
         throw "Configuration validation failed. Please check errors above."
-    } else {
+    }
+    else {
         Write-Log "Configuration structure validated successfully." "SUCCESS"
     }
 }

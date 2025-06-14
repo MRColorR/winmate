@@ -36,15 +36,16 @@ function Write-Log {
     $logEntry = "[$timestamp] [$Level] $Message"
 
     switch ($Level) {
-        "INFO"     { Write-Host $logEntry -ForegroundColor White  }
-        "WARNING"  { Write-Host $logEntry -ForegroundColor Yellow; $global:WarningCount++ }
-        "ERROR"    { Write-Host $logEntry -ForegroundColor Red; $global:ErrorCount++ }
-        "SUCCESS"  { Write-Host $logEntry -ForegroundColor Green; $global:SuccessCount++ }
+        "INFO" { Write-Host $logEntry -ForegroundColor White }
+        "WARNING" { Write-Host $logEntry -ForegroundColor Yellow; $global:WarningCount++ }
+        "ERROR" { Write-Host $logEntry -ForegroundColor Red; $global:ErrorCount++ }
+        "SUCCESS" { Write-Host $logEntry -ForegroundColor Green; $global:SuccessCount++ }
     }
 
     try {
         Add-Content -Path $global:LogPath -Value $logEntry -Encoding UTF8
-    } catch {
+    }
+    catch {
         Add-Content -Path $global:LogFallbackPath -Value $logEntry -Encoding UTF8
     }
 }
@@ -76,7 +77,8 @@ PowerShell Version: $($PSVersionTable.PSVersion)
         Set-Content -Path $global:LogPath -Value $header -Encoding UTF8
         Write-Host "DEBUG: Initialize-Logging - Log header written."
         Write-Log "Logging initialized" "SUCCESS"
-    } catch {
+    }
+    catch {
         Write-Host "DEBUG: Initialize-Logging - ERROR CAUGHT: $($_.Exception.Message)"
         Add-Content -Path $global:LogFallbackPath -Value "[FALLBACK LOG] Logging initialization failed: $_" -Encoding UTF8
     }

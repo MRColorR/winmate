@@ -9,11 +9,11 @@ function Test-PackageProvider {
     )
 
     switch ($Provider.ToLower()) {
-        'winget'       { return (Get-Command winget -ErrorAction SilentlyContinue) -ne $null }
-        'chocolatey'   { return (Get-Command choco -ErrorAction SilentlyContinue) -ne $null }
-        'scoop'        { return (Get-Command scoop -ErrorAction SilentlyContinue) -ne $null }
-        'msstore'      { return $true }  # built-in
-        default        {
+        'winget' { return (Get-Command winget -ErrorAction SilentlyContinue) -ne $null }
+        'chocolatey' { return (Get-Command choco -ErrorAction SilentlyContinue) -ne $null }
+        'scoop' { return (Get-Command scoop -ErrorAction SilentlyContinue) -ne $null }
+        'msstore' { return $true }  # built-in
+        default {
             Write-Log "Unknown provider: $Provider" "WARNING"
             return $false
         }
@@ -34,7 +34,8 @@ function Install-PackageProvider {
                 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
                 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
                 Write-Log "Chocolatey installed successfully" "SUCCESS"
-            } catch {
+            }
+            catch {
                 Write-Log "Failed to install Chocolatey: $_" "ERROR"
                 throw
             }
@@ -44,7 +45,8 @@ function Install-PackageProvider {
                 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
                 iwr -useb get.scoop.sh | iex
                 Write-Log "Scoop installed successfully" "SUCCESS"
-            } catch {
+            }
+            catch {
                 Write-Log "Failed to install Scoop: $_" "ERROR"
                 throw
             }

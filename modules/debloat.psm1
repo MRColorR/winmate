@@ -16,9 +16,9 @@ function Invoke-WindowsDebloat {
     Write-Log "Starting Windows Debloat..." "INFO"
 
     if (-not ($Config.PSObject.Properties.Name -contains 'apps' -and `
-            $null -ne $Config.apps -and `
-            $Config.apps.PSObject.Properties.Name -contains 'apps-list' -and `
-            $null -ne $Config.apps.'apps-list')) {
+                $null -ne $Config.apps -and `
+                $Config.apps.PSObject.Properties.Name -contains 'apps-list' -and `
+                $null -ne $Config.apps.'apps-list')) {
         Write-Log "Apps data ('apps-list') for debloating is missing or invalid in configuration." "WARNING"
         return
     }
@@ -85,7 +85,8 @@ function Remove-WindowsApplication {
             Write-Log "App not found or already removed: $AppName" "INFO"
         }
 
-    } catch {
+    }
+    catch {
         Write-Log "Error removing ${AppName}: $_" "ERROR"
     }
 }

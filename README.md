@@ -267,6 +267,42 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 - Scoop: Open-source, generally safe
 - Manual: Verify download URLs and checksums
 
+## 🛡️ GitHub API Rate Limiting & Token Usage
+
+Some features, such as fetching the default install location from the WinGet manifest repository, may require multiple requests to the GitHub API. GitHub imposes rate limits on unauthenticated requests. If you encounter warnings about rate limiting, you can provide a GitHub Personal Access Token (PAT) to increase your API quota.
+
+**How the script uses a GitHub token:**
+- The script will use a token if provided as a `-GitHubToken` parameter or if a `token.json` file is present in the `config/` directory alongside `config.json`.
+- If both are provided, the parameter takes precedence.
+- If no token is provided, the script will still work, but may hit GitHub API rate limits if run repeatedly or in automation.
+
+**How to use a GitHub token with this script:**
+- Generate a token at [GitHub Developer Settings](https://github.com/settings/tokens) (no special scopes required for public repo access).
+- Pass the token as a parameter to the script, or create a `config/token.json` file with the following content:
+
+```json
+{
+  "GitHubToken": "ghp_YourPersonalAccessTokenHere"
+}
+```
+
+- The script will automatically use the token to mitigate rate limiting when fetching manifests.
+
+**Example usage:**
+```powershell
+# With token as parameter
+$token = "ghp_YourPersonalAccessTokenHere"
+.\PostInstall.ps1 -GitHubToken $token
+
+# Or with config/token.json present in the config directory
+.\PostInstall.ps1
+```
+
+- If you do not provide a token and hit the rate limit, the script will log a warning and automatically retry after a delay.
+- For most users, a token is not required unless running the script repeatedly or in automation with lots of apps to install.
+
+---
+
 ## 🚀 Execution Phases
 
 The script executes in five main phases:
@@ -361,10 +397,6 @@ Get-Content .\postinstall.log | Select-String "SUMMARY" -A 10
 - Include updated documentation
 - Test thoroughly before submission
 
-## 📄 License
-
-This project is open source and available under the MIT License.
-
 ## 🆘 Support
 
 For issues, questions, or contributions:
@@ -377,11 +409,37 @@ For issues, questions, or contributions:
 
 - [PowerShell Documentation](https://docs.microsoft.com/powershell/)
 - [WinGet Documentation](https://docs.microsoft.com/windows/package-manager/)
+- [Winget Create Documentation](https://github.com/microsoft/winget-create/)
 - [Chocolatey Documentation](https://docs.chocolatey.org/)
 - [Scoop Documentation](https://scoop.sh/)
 
----
+## 🫶 Support the Projects
 
-**Version**: 1.0.0  
-**Last Updated**: June 5, 2025  
-**Compatibility**: Windows 10/11, PowerShell 5.1+
+Your contributions are vital in helping to sustain the development of open-source projects and tools made freely available to everyone. If you find value in my work and wish to show your support, kindly consider making a donation:
+
+### Cryptocurrency Wallets
+
+- **Bitcoin (BTC):** `1EzBrKjKyXzxydSUNagAP8XLeRzBTxfHcg`
+- **Ethereum (ETH):** `0xE65c32004b968cd1b4084bC3484C0dA051eeD3ee`
+- **Solana (SOL):** `6kUAWW8q5169qnUJdxxLsNMPpaKPvbUSmryKDYTb9epn`
+- **Polygon (MATIC):** `0xE65c32004b968cd1b4084bC3484C0dA051eeD3ee`
+- **BNB (Binance Smart Chain):** `0xE65c32004b968cd1b4084bC3484C0dA051eeD3ee`
+
+### Support via Other Platforms
+
+- **Patreon:** [Support me on Patreon](https://patreon.com/mrcolorrain)
+- **Buy Me a Coffee:** [Buy me a coffee](https://buymeacoffee.com/mrcolorrain)
+- **Ko-fi:** [Support me on Ko-fi](https://ko-fi.com/mrcolorrain)
+
+Your support, no matter how small, is enormously appreciated and directly fuels ongoing and future developments. Thank you for your generosity! 🙏
+
+## ⚠️ Disclaimer
+This project and its artifacts are provided "as is" and without warranty of any kind.
+
+The author makes no warranties, express or implied, that this script is free of errors, defects, or suitable for any particular purpose.
+
+The author shall not be held liable for any damages suffered by any user of this script, whether direct, indirect, incidental, consequential, or special, arising from the use of or inability to use this script or its documentation, even if the author has been advised of the possibility of such damages.
+
+## 📄 License
+
+This project is open source and available under the GPL 3.0 license.

@@ -7,8 +7,25 @@
 
 param(
     [string]$ConfigPath = "$PSScriptRoot\config\config.json",
-    [string]$LogPath = "$PSScriptRoot\logs\postinstall.log"
+    [string]$LogPath = "$PSScriptRoot\logs\postinstall.log",
+    [string]$GitHubToken = $null
 )
+
+# Load GitHub token from config/token.json if not provided as a parameter
+if (-not $GitHubToken) {
+    $tokenFile = Join-Path $PSScriptRoot 'config/token.json'
+    if (Test-Path $tokenFile) {
+        try {
+            $tokenObj = Get-Content $tokenFile | ConvertFrom-Json
+            if ($tokenObj.GitHubToken -and $tokenObj.GitHubToken -ne "") {
+                $GitHubToken = $tokenObj.GitHubToken
+            }
+        }
+        catch {
+            Write-Host "WARNING: Could not parse config/token.json. Proceeding without GitHub token."
+        }
+    }
+}
 
 $ScriptBaseDir = $PSScriptRoot # Define base directory for module paths
 
@@ -42,9 +59,10 @@ try {
     Test-Configuration -Config $config
 
     # Version Check
-    if ($config.repo) {
+    if ($config.metadata -and $config.metadata.repo) {
         Check-LatestVersion -Config $config
-    } else {
+    }
+    else {
         Write-Log "Repository not defined in config. Skipping version check." "WARNING"
     }
 
@@ -62,8 +80,13 @@ try {
 
     # Applications Phase
     if ($config.PSObject.Properties.Name -contains 'apps' -and $null -ne $config.apps.enabled -and $config.apps.enabled -eq $true) {
-        Write-Log "Running Application Installation Phase" "INFO"
-        Install-Applications -Config $config
+        if ($GitHubToken) {
+            Write-Log "Running Application Installation Phase (GitHub token detected, using authenticated API requests)" "INFO"
+        }
+        else {
+            Write-Log "Running Application Installation Phase (no GitHub token, using unauthenticated API requests)" "INFO"
+        }
+        Install-Applications -Config $config -GitHubToken $GitHubToken
     }
 
     # Cleanup
@@ -74,7 +97,8 @@ try {
     # Summary
     Show-InstallationSummary
 
-} catch {
+}
+catch {
     Write-Log "Fatal error occurred: $_" "ERROR"
     Show-InstallationSummary
     exit 1

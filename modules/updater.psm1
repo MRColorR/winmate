@@ -14,13 +14,15 @@ function Check-LatestVersion {
         $repoName = $matches[2]
         $Repo = "$user/$repoName"
         Write-Log "Checking for updates for repository: $Repo" "INFO"
-    } else {
+    }
+    else {
         throw "Invalid repo URL format in config."
     }
 
     if ($null -ne $Config.metadata.version) { 
         $currentVersion = $Config.metadata.version 
-    } else { 
+    }
+    else { 
         $currentVersion = "v0.0.0" 
     }
     $apiUrl = "https://api.github.com/repos/$Repo/releases/latest"
@@ -31,10 +33,12 @@ function Check-LatestVersion {
 
         if ($latestTag -ne $currentVersion) {
             Write-Log "New version available: $latestTag. You are on $currentVersion. Visit https://github.com/$Repo/releases" "INFO"
-        } else {
+        }
+        else {
             Write-Log "You are using the latest version: $currentVersion" "SUCCESS"
         }
-    } catch {
+    }
+    catch {
         Write-Log "Could not check for updates: $_" "WARNING"
     }
 }

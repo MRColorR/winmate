@@ -24,68 +24,194 @@
       "enabled": true,
       "description": "Manages installation or removal of specified applications",
       "apps-list": {
-        "Git": {
+        "BattleNet": {
           "remove": false,
           "install": true,
           "provider": "winget",
-          "package_id": "Git.Git",
-          "description": "Git version control system"
+          "package_id": "Blizzard.BattleNet",
+          "description": "Blizzard Battle.net client",
+          "category": "Games",
+          "install_location": "AUTO"
         },
-        "NodeJS": {
-          "remove": false,
-          "install": true,
-          "provider": "winget",
-          "package_id": "OpenJS.NodeJS",
-          "description": "Node.js JavaScript runtime"
-        },
-        "Python": {
+        "Chrome": {
           "remove": false,
           "install": false,
           "provider": "winget",
-          "package_id": "Python.Python.3.12",
-          "description": "Python programming language"
-        },
-        "VLC": {
-          "remove": false,
-          "install": false,
-          "provider": "winget",
-          "package_id": "VideoLAN.VLC",
-          "description": "VLC media player"
+          "package_id": "Google.Chrome",
+          "description": "Google Chrome web browser",
+          "category": "Browser",
+          "install_location": false
         },
         "Discord": {
           "remove": false,
           "install": true,
           "provider": "winget",
           "package_id": "Discord.Discord",
-          "description": "Discord communication platform"
+          "description": "Discord communication platform",
+          "category": "Communication",
+          "install_location": false
         },
-        "PowerToys": {
+        "DockerDesktop": {
           "remove": false,
           "install": true,
           "provider": "winget",
-          "package_id": "Microsoft.PowerToys",
-          "description": "Microsoft PowerToys utilities"
+          "package_id": "Docker.DockerDesktop",
+          "description": "Docker Desktop for Windows",
+          "category": "Development",
+          "install_location": false
         },
-        "WindowsTerminal": {
+        "EAApp": {
           "remove": false,
           "install": true,
           "provider": "winget",
-          "package_id": "Microsoft.WindowsTerminal",
-          "description": "Windows Terminal"
+          "package_id": "ElectronicArts.EADesktop",
+          "description": "EA App for PC gaming",
+          "category": "Games",
+          "install_location": false
+        },
+        "Firefox": {
+          "remove": false,
+          "install": false,
+          "provider": "winget",
+          "package_id": "Mozilla.Firefox",
+          "description": "Mozilla Firefox web browser",
+          "category": "Browser",
+          "install_location": false
+        },
+        "GOGGalaxy": {
+          "remove": false,
+          "install": true,
+          "provider": "winget",
+          "package_id": "GOG.Galaxy",
+          "description": "GOG Galaxy game client",
+          "category": "Games",
+          "install_location": false
+        },
+        "Git": {
+          "remove": false,
+          "install": true,
+          "provider": "winget",
+          "package_id": "Git.Git",
+          "description": "Git version control system",
+          "category": "Development",
+          "install_location": false
+        },
+        "GPG4Win": {
+          "remove": false,
+          "install": true,
+          "provider": "winget",
+          "package_id": "Gpg4win.Gpg4win",
+          "description": "Gpg4win encryption suite for Windows",
+          "category": "Security",
+          "install_location": false
+        },
+        "MobaXterm": {
+          "remove": false,
+          "install": false,
+          "provider": "winget",
+          "package_id": "Mobatek.MobaXterm",
+          "description": "MobaXterm terminal and SSH client",
+          "category": "Utilities",
+          "install_location": false
+        },
+        "NodeJS": {
+          "remove": false,
+          "install": true,
+          "provider": "winget",
+          "package_id": "OpenJS.NodeJS",
+          "description": "Node.js JavaScript runtime",
+          "category": "Development",
+          "install_location": false
         },
         "OhMyPosh": {
           "remove": false,
           "install": true,
           "provider": "winget",
           "package_id": "JanDeDobbeleer.OhMyPosh",
-          "description": "Oh My Posh prompt theme engine"
+          "description": "Oh My Posh prompt theme engine",
+          "category": "Utilities",
+          "install_location": false
+        },
+        "PowerToys": {
+          "remove": false,
+          "install": true,
+          "provider": "winget",
+          "package_id": "Microsoft.PowerToys",
+          "description": "Microsoft PowerToys utilities",
+          "category": "Utilities",
+          "install_location": false
+        },
+        "Python": {
+          "remove": false,
+          "install": false,
+          "provider": "winget",
+          "package_id": "Python.Python.3.12",
+          "description": "Python programming language",
+          "category": "Development",
+          "install_location": false
+        },
+        "RiotClient": {
+          "remove": false,
+          "install": true,
+          "provider": "winget",
+          "package_id": "RiotGames.RiotClient",
+          "description": "Riot Games client",
+          "category": "Games",
+          "install_location": false
+        },
+        "Steam": {
+          "remove": false,
+          "install": true,
+          "provider": "winget",
+          "package_id": "Valve.Steam",
+          "description": "Steam gaming platform",
+          "category": "Games",
+          "install_location": false
+        },
+        "Tabby": {
+          "remove": false,
+          "install": true,
+          "provider": "winget",
+          "package_id": "Eugeny.Tabby",
+          "description": "Tabby terminal emulator",
+          "category": "Utilities",
+          "install_location": false
+        },
+        "VLC": {
+          "remove": false,
+          "install": false,
+          "provider": "winget",
+          "package_id": "VideoLAN.VLC",
+          "description": "VLC media player",
+          "category": "Media",
+          "install_location": false
         },
         "VSCode": {
           "remove": false,
           "install": true,
           "provider": "winget",
           "package_id": "Microsoft.VisualStudioCode",
-          "description": "Visual Studio Code editor"
+          "description": "Visual Studio Code editor",
+          "category": "Development",
+          "install_location": false
+        },
+        "WhatsApp": {
+          "remove": false,
+          "install": true,
+          "provider": "winget",
+          "package_id": "WhatsApp.WhatsApp",
+          "description": "WhatsApp Desktop client",
+          "category": "Communication",
+          "install_location": false
+        },
+        "WindowsTerminal": {
+          "remove": false,
+          "install": true,
+          "provider": "winget",
+          "package_id": "Microsoft.WindowsTerminal",
+          "description": "Windows Terminal",
+          "category": "Utilities",
+          "install_location": false
         }
       }
     },
