@@ -46,16 +46,24 @@ function Remove-WindowsApplication {
         $uwp = Get-AppxPackage | Where-Object { $_.Name -like "*$AppName*" }
         if ($uwp) {
             $uwp | Remove-AppxPackage -ErrorAction Stop
-            Write-Log "Removed UWP: $AppName" "SUCCESS"
-            $removed = $true
+            if ($?) {
+                Write-Log "Removed UWP: $AppName" "SUCCESS"
+                $removed = $true
+            } else {
+                Write-Log "Failed to remove UWP: $AppName" "ERROR"
+            }
         }
 
         # Provisioned
         $prov = Get-AppxProvisionedPackage -Online | Where-Object { $_.DisplayName -like "*$AppName*" }
         if ($prov) {
             $prov | Remove-AppxProvisionedPackage -Online -ErrorAction Stop
-            Write-Log "Removed provisioned package: $AppName" "SUCCESS"
-            $removed = $true
+            if ($?) {
+                Write-Log "Removed provisioned package: $AppName" "SUCCESS"
+                $removed = $true
+            } else {
+                Write-Log "Failed to remove provisioned package: $AppName" "ERROR"
+            }
         }
 
         # Fallback to package manager if defined
@@ -66,6 +74,8 @@ function Remove-WindowsApplication {
                     if ($LASTEXITCODE -eq 0) {
                         Write-Log "Removed via WinGet: $AppName" "SUCCESS"
                         $removed = $true
+                    } else {
+                        Write-Log "Failed to remove via WinGet: $AppName (exit code $LASTEXITCODE)" "ERROR"
                     }
                 }
                 'chocolatey' {
@@ -73,6 +83,8 @@ function Remove-WindowsApplication {
                     if ($LASTEXITCODE -eq 0) {
                         Write-Log "Removed via Chocolatey: $AppName" "SUCCESS"
                         $removed = $true
+                    } else {
+                        Write-Log "Failed to remove via Chocolatey: $AppName (exit code $LASTEXITCODE)" "ERROR"
                     }
                 }
             }

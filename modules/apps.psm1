@@ -217,11 +217,21 @@ function Install-SingleApp {
                 $cmd = "winget install --id $id --silent --accept-package-agreements --accept-source-agreements --disable-interactivity $locationArg"
                 Write-Log $install_mesg "INFO"
                 Invoke-Expression $cmd
+                if ($LASTEXITCODE -eq 0) {
+                    Write-Log "Installed $AppName via $Provider" "SUCCESS"
+                } else {
+                    Write-Log "Failed installing $AppName via $Provider (exit code $LASTEXITCODE)" "ERROR"
+                }
             }
             'chocolatey' {
                 if ($null -ne $AppConfig.package_name) { $id = $AppConfig.package_name } else { $id = $AppName }
                 Write-Log $install_mesg "INFO"
                 choco install $id -y
+                if ($LASTEXITCODE -eq 0) {
+                    Write-Log "Installed $AppName via $Provider" "SUCCESS"
+                } else {
+                    Write-Log "Failed installing $AppName via $Provider (exit code $LASTEXITCODE)" "ERROR"
+                }
             }
             'scoop' {
                 if ($AppConfig.bucket) {
@@ -230,6 +240,11 @@ function Install-SingleApp {
                 if ($null -ne $AppConfig.package_name) { $id = $AppConfig.package_name } else { $id = $AppName }
                 Write-Log $install_mesg "INFO"
                 scoop install $id
+                if ($LASTEXITCODE -eq 0) {
+                    Write-Log "Installed $AppName via $Provider" "SUCCESS"
+                } else {
+                    Write-Log "Failed installing $AppName via $Provider (exit code $LASTEXITCODE)" "ERROR"
+                }
             }
             'manual' {
                 if ($AppConfig.install_location) {
@@ -237,12 +252,12 @@ function Install-SingleApp {
                 }
                 Write-Log $install_mesg "INFO"
                 Install-ManualApp -AppName $AppName -AppConfig $AppConfig
+                # Manual install logs its own result
             }
             default {
                 Write-Log "Unknown provider: $Provider" "ERROR"
             }
         }
-        Write-Log "Installed $AppName via $Provider" "SUCCESS"
     }
     catch {
         Write-Log "Failed installing ${AppName} (${Provider}): $_" "ERROR"
@@ -261,15 +276,30 @@ function Install-ManualApp {
 
     try {
         Invoke-WebRequest $url -OutFile $file -UseBasicParsing
-        $ext = [IO.Path]::GetExtension($file)
-
-        switch ($ext) {
-            '.exe' { Start-Process -FilePath $file -ArgumentList $installArgs -Wait }
-            '.msi' { Start-Process msiexec.exe -ArgumentList "/i `"$file`" /qn" -Wait }
-            default { Write-Log "Unknown installer type: $ext for $AppName" "WARNING" }
+        if (-not $?) {
+            Write-Log "Failed to download $AppName from $url" "ERROR"
+            return
         }
-
-        Write-Log "Manual app installed: $AppName" "SUCCESS"
+        $ext = [IO.Path]::GetExtension($file)
+        $installSuccess = $false
+        switch ($ext) {
+            '.exe' {
+                Start-Process -FilePath $file -ArgumentList $installArgs -Wait
+                if ($LASTEXITCODE -eq 0) { $installSuccess = $true }
+            }
+            '.msi' {
+                Start-Process msiexec.exe -ArgumentList "/i `"$file`" /qn" -Wait
+                if ($LASTEXITCODE -eq 0) { $installSuccess = $true }
+            }
+            default {
+                Write-Log "Unknown installer type: $ext for $AppName" "WARNING"
+            }
+        }
+        if ($installSuccess) {
+            Write-Log "Manual app installed: $AppName" "SUCCESS"
+        } else {
+            Write-Log "Manual install failed for $AppName (exit code $LASTEXITCODE)" "ERROR"
+        }
         Remove-Item $file -Force -ErrorAction SilentlyContinue
     }
     catch {
