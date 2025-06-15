@@ -1,3 +1,7 @@
+# Set output encoding to UTF-8 to handle special characters better.
+$OutputEncoding = [System.Text.Encoding]::UTF8
+[System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
 <#
 .SYNOPSIS
     Automates Windows post-installation setup including debloating, font installation,

@@ -154,7 +154,9 @@ function Remove-WindowsApplication {
                 }
             }
             else {
-                Write-Log "$logPrefix Not found via $provider (or provider check indicated not installed). Output: $commandOutput" "INFO"
+                # Changed to avoid logging raw $commandOutput which might contain problematic characters or be excessively verbose.
+                # The $isInstalledViaProvider flag is the important outcome of the check.
+                Write-Log "$logPrefix Not found via $provider (provider check indicated not installed or check failed)." "INFO"
             }
 
             if ($removed) {
@@ -222,7 +224,7 @@ function Remove-WindowsApplication {
     catch {
         # This is a general catch block for unexpected errors in the Remove-WindowsApplication function.
         # Specific errors within UWP/Provisioned removal are caught internally to allow fallbacks.
-        Write-Log "$logPrefix CRITICAL error during removal attempt for $AppNameKey: $($_.Exception.Message)" "ERROR"
+        Write-Log "$logPrefix CRITICAL error during removal attempt for ${AppNameKey}: $($_.Exception.Message)" "ERROR"
         Update-PhaseOutcome -PhaseName "Debloat" -OutcomeType "Error" -DetailMessage "$logPrefix Failed (critical error): $($_.Exception.Message)"
     }
 }

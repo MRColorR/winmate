@@ -48,9 +48,10 @@ function Invoke-Cleanup {
 
     try {
         # Define paths for general temporary file cleanup.
+        # Using direct string interpolation to ensure these are treated as string patterns by Get-ChildItem.
         $tempFileLocations = @(
-            Join-Path $env:TEMP "*", # All files and folders directly under TEMP
-            Join-Path $env:LOCALAPPDATA "Temp\*" # All files and folders directly under Local AppData Temp
+            "$($env:TEMP)\*",
+            "$($env:LOCALAPPDATA)\Temp\*"
         )
 
         Write-Log "Attempting to clean up temporary files older than 1 day from common locations..." "INFO"
