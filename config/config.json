@@ -1,30 +1,23 @@
 {
   "apps_debloater": {
-    "enabled": true,
+    "enabled": false,
     "description": "Controls whether to remove unwanted pre-installed Windows applications"
   },
   "fonts_provisioner": {
-    "enabled": false,
-    "description": "Handles installation of Nerd Fonts and custom fonts"
+    "enabled": true,
+    "description": "Handles installation of Nerd Fonts"
   },
   "fonts_list": {
-    "nerdfonts": {
+    "nerd_fonts": {
       "enabled": true,
       "fonts": [
-        "FiraCode",
-        "CascadiaCode"
+        { "name": "fira-code", "zip": "FiraCode", "install": false },
+        { "name": "caskaydia-cove", "zip": "CaskaydiaCove", "install": true }
       ]
-    },
-    "custom": [
-      {
-        "name": "Roboto Font",
-        "url": "https://fonts.google.com/download?family=Roboto",
-        "enabled": false
-      }
-    ]
+    }
   },
   "apps_provisioner": {
-    "enabled": false,
+    "enabled": true,
     "description": "Manages installation or removal of specified applications"
   },
   "apps_list": {
@@ -104,7 +97,7 @@
       "remove": true,
       "install": true,
       "provider": "winget",
-      "package_id": "Gpg4win.Gpg4win",
+      "package_id": "GnuPG.Gpg4win",
       "description": "Gpg4win encryption suite for Windows",
       "category": "Security",
       "install_location": false
@@ -145,7 +138,7 @@
       "category": "Utilities",
       "install_location": false
     },
-    "Python": {
+    "Python-3_12": {
       "remove": false,
       "install": false,
       "provider": "winget",
@@ -154,21 +147,21 @@
       "category": "Development",
       "install_location": false
     },
-    "RiotClient": {
-      "remove": true,
-      "install": true,
-      "provider": "winget",
-      "package_id": "RiotGames.RiotClient",
-      "description": "Riot Games client",
-      "category": "Games",
-      "install_location": false
-    },
     "Steam": {
       "remove": true,
       "install": true,
       "provider": "winget",
       "package_id": "Valve.Steam",
       "description": "Steam gaming platform",
+      "category": "Games",
+      "install_location": false
+    },
+    "EpicGamesLauncher": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "EpicGames.EpicGamesLauncher",
+      "description": "Epic Games Launcher",
       "category": "Games",
       "install_location": false
     },
@@ -203,8 +196,26 @@
       "remove": true,
       "install": true,
       "provider": "winget",
-      "package_id": "WhatsApp.WhatsApp",
+      "package_id": "9NKSQGP7F2NH",
       "description": "WhatsApp Desktop client",
+      "category": "Communication",
+      "install_location": false
+    },
+    "Telegram": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "Telegram.TelegramDesktop",
+      "description": "Telegram Desktop client",
+      "category": "Communication",
+      "install_location": false
+    },
+    "Signal": {
+      "remove": true,
+      "install": true,
+      "provider": "winget",
+      "package_id": "OpenWhisperSystems.Signal",
+      "description": "Signal messaging app",
       "category": "Communication",
       "install_location": false
     },
