@@ -8,7 +8,6 @@ A comprehensive PowerShell-based automation solution for Windows post-installati
 - **Windows Debloating**: Remove unwanted pre-installed applications and bloatware
 - **Font Management**: Automated installation of Nerd Fonts and custom fonts
 - **Application Installation**: Multi-provider app installation (WinGet, Chocolatey, Scoop, MS Store)
-- **System Configuration**: Privacy, performance, and UI optimizations
 - **Comprehensive Logging**: Structured logging with multiple levels and detailed reporting
 
 ### Technical Highlights
@@ -17,7 +16,6 @@ A comprehensive PowerShell-based automation solution for Windows post-installati
 - **JSON Configuration**: Flexible, human-readable configuration management
 - **Multi-Provider Support**: Automatic package manager installation when needed
 - **Extensive Documentation**: Comprehensive inline documentation and comments
-- **Best Practices**: Follows PowerShell and software development best practices
 
 ## 📋 Prerequisites
 
