@@ -30,6 +30,15 @@
       "category": "Games",
       "install_location": "AUTO"
     },
+    "UbisoftConnect": {
+      "remove": false,
+      "install": true,
+      "provider": "winget",
+      "package_id": "Ubisoft.Connect",
+      "description": "Ubisoft Connect client for managing and launching Ubisoft games",
+      "category": "Games",
+      "install_location": false
+    },
     "Chrome": {
       "remove": false,
       "install": false,
