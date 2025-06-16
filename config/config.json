@@ -124,8 +124,8 @@
       "remove": true,
       "install": true,
       "provider": "winget",
-      "package_id": "OpenJS.NodeJS",
-      "description": "Node.js JavaScript runtime",
+      "package_id": "OpenJS.NodeJS.LTS",
+      "description": "Node.js LTS JavaScript runtime",
       "category": "Development",
       "install_location": false
     },
