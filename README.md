@@ -44,10 +44,10 @@ A comprehensive PowerShell-based automation solution for Windows post-installati
 3. **Run the script**:
    ```powershell
    # Run with default config.json
-   .\post_install.ps1
+   powershell -ExecutionPolicy Bypass -File .\post_install.ps1
    
    # Run with custom configuration
-   .\post_install.ps1 -ConfigPath "custom-config.json" -LogPath "my-install.log"
+   powershell -ExecutionPolicy Bypass -File .\post_install.ps1 -ConfigPath "custom-config.json" -LogPath "my-install.log"
    ```
 
 ### Advanced Usage
