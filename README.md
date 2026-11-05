@@ -1,32 +1,46 @@
 # Windows Post-Installation Automation Script
 
+<!-- Project README scaffold: https://github.com/MRColorR/project-template -->
+
+[Overview](#overview) | [Getting started](#getting-started) | [Documentation](#documentation) | [Contributing](#contributing) | [Support](#support) | [License](#license)
+
+## Overview
+
 A comprehensive PowerShell-based automation solution for Windows post-installation tasks, designed with software engineering best practices including modular architecture, comprehensive logging, error handling, and JSON-driven configuration.
 
-## 🚀 Features
+<a name="-features"></a>
 
-### Core Functionality
+### Features
+
+#### Core Functionality
 - **Windows Debloating**: Remove unwanted pre-installed applications and bloatware
 - **Font Management**: Automated installation of Nerd Fonts and custom fonts
 - **Application Installation**: Multi-provider app installation (WinGet, Chocolatey, Scoop, MS Store)
 - **Comprehensive Logging**: Structured logging with multiple levels and detailed reporting
 
-### Technical Highlights
+#### Technical Highlights
 - **Modular Architecture**: Well-organized functions with single responsibility
 - **Error Resilience**: Failures don't stop the entire process
 - **JSON Configuration**: Flexible, human-readable configuration management
 - **Multi-Provider Support**: Automatic package manager installation when needed
 - **Extensive Documentation**: Comprehensive inline documentation and comments
 
-## 📋 Prerequisites
+## Getting started
+
+<a name="-prerequisites"></a>
+
+### Prerequisites
 
 - Windows 10/11
 - PowerShell 5.1 or higher
 - Administrator privileges
 - Internet connection for downloads
 
-## 🛠️ Installation & Usage
+<a name="️-installation--usage"></a>
 
-### Quick Start
+### Installation & Usage
+
+#### Quick Start
 
 1. **Download the scripts**:
    ```powershell
@@ -48,7 +62,7 @@ A comprehensive PowerShell-based automation solution for Windows post-installati
    powershell -ExecutionPolicy Bypass -File .\post_install.ps1 -ConfigPath "custom-config.json" -LogPath "my-install.log"
    ```
 
-### Advanced Usage
+#### Advanced Usage
 
 ```powershell
 # Run with specific parameters
@@ -62,9 +76,13 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Start-Process PowerShell -Verb RunAs -ArgumentList "-File .\post_install.ps1"
 ```
 
-## 📖 Configuration Guide
+## Documentation
 
-### Configuration File Structure
+<a name="-configuration-guide"></a>
+
+### Configuration Guide
+
+#### Configuration File Structure
 
 The `config.json` file is organized into main sections:
 
@@ -91,9 +109,9 @@ The `config.json` file is organized into main sections:
 }
 ```
 
-### Section Details
+#### Section Details
 
-#### 1. Apps Debloater Section
+##### 1. Apps Debloater Section
 Controls removal of unwanted Windows applications:
 
 ```json
@@ -103,7 +121,7 @@ Controls removal of unwanted Windows applications:
 }
 ```
 
-#### 2. Fonts List (Top-Level)
+##### 2. Fonts List (Top-Level)
 Manages font installation including Nerd Fonts and custom fonts:
 
 ```json
@@ -122,7 +140,7 @@ Manages font installation including Nerd Fonts and custom fonts:
 }
 ```
 
-#### 3. Fonts Provisioner Section
+##### 3. Fonts Provisioner Section
 Controls whether the font installation phase runs:
 
 ```json
@@ -132,7 +150,7 @@ Controls whether the font installation phase runs:
 }
 ```
 
-#### 4. Apps Provisioner Section
+##### 4. Apps Provisioner Section
 Controls application installation and removal:
 
 ```json
@@ -142,7 +160,7 @@ Controls application installation and removal:
 }
 ```
 
-#### 5. Apps List (Top-Level)
+##### 5. Apps List (Top-Level)
 All applications to be installed or removed are defined here:
 
 ```json
@@ -171,7 +189,7 @@ All applications to be installed or removed are defined here:
 - `msstore`: Microsoft Store
 - `manual`: Direct download and installation
 
-#### 6. Metadata Section
+##### 6. Metadata Section
 General information about the configuration and compatibility.
 
 ```json
@@ -188,9 +206,11 @@ General information about the configuration and compatibility.
 }
 ```
 
-## 🔧 Application Management
+<a name="-application-management"></a>
 
-### Adding New Applications
+### Application Management
+
+#### Adding New Applications
 
 To add a new application for installation:
 
@@ -204,7 +224,7 @@ To add a new application for installation:
 }
 ```
 
-### Removing Applications
+#### Removing Applications
 
 To mark an application for removal:
 
@@ -218,7 +238,7 @@ To mark an application for removal:
 }
 ```
 
-### Provider-Specific Configuration
+#### Provider-Specific Configuration
 
 **WinGet**:
 ```json
@@ -246,19 +266,21 @@ To mark an application for removal:
 "install_args": "/S /v/qn"
 ```
 
-## 📊 Logging System
+<a name="-logging-system"></a>
 
-### Log Levels
+### Logging System
+
+#### Log Levels
 - `INFO`: General information
 - `SUCCESS`: Successful operations
 - `WARNING`: Non-critical issues
 - `ERROR`: Critical errors
 
-### Log File Location
+#### Log File Location
 - Default: `postinstall.log` in script directory
 - Custom: Specify with `-LogPath` parameter
 
-### Log File Format
+#### Log File Format
 ```
 [2025-06-05 14:30:15] [INFO] Starting Windows Post-Installation Automation
 [2025-06-05 14:30:16] [SUCCESS] Configuration loaded successfully
@@ -266,7 +288,9 @@ To mark an application for removal:
 [2025-06-05 14:30:18] [ERROR] Failed to install application: Critical error
 ```
 
-## 🛡️ Error Handling
+<a name="️-error-handling"></a>
+
+### Error Handling
 
 The script implements comprehensive error handling:
 
@@ -275,28 +299,32 @@ The script implements comprehensive error handling:
 - **Graceful degradation**: Alternative methods attempted when primary fails
 - **Summary reporting**: Final summary shows success/warning/error counts
 
-## 🔒 Security Considerations
+<a name="-security-considerations"></a>
 
-### Administrator Privileges
+### Security Considerations
+
+#### Administrator Privileges
 The script requires administrator privileges for:
 - Installing/removing applications
 - Modifying system registry settings
 - Installing fonts system-wide
 - Changing system configurations
 
-### Execution Policy
+#### Execution Policy
 You may need to adjust PowerShell execution policy:
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-### Package Manager Security
+#### Package Manager Security
 - WinGet: Uses Microsoft's trusted repository
 - Chocolatey: Community-driven, verify packages before use
 - Scoop: Open-source, generally safe
 - Manual: Verify download URLs and checksums
 
-## 🛡️ GitHub API Rate Limiting & Token Usage
+<a name="️-github-api-rate-limiting--token-usage"></a>
+
+### GitHub API Rate Limiting & Token Usage
 
 Some features, such as fetching the default install location from the WinGet manifest repository, may require multiple requests to the GitHub API. GitHub imposes rate limits on unauthenticated requests. If you encounter warnings about rate limiting, you can provide a GitHub Personal Access Token (PAT) to increase your API quota.
 
@@ -332,7 +360,9 @@ $token = "ghp_YourPersonalAccessTokenHere"
 
 ---
 
-## 🚀 Execution Phases
+<a name="-execution-phases"></a>
+
+### Execution Phases
 
 The script executes in five main phases:
 
@@ -361,21 +391,25 @@ The script executes in five main phases:
    - Refreshes environment variables
    - Generates final summary
 
-## 📈 Performance Optimization
+<a name="-performance-optimization"></a>
 
-### Batch Operations
+### Performance Optimization
+
+#### Batch Operations
 - Applications grouped by provider for efficient installation
 - Parallel operations where possible
 - Minimal system restarts required
 
-### Resource Management
+#### Resource Management
 - Temporary files cleaned automatically
 - Memory usage optimized
 - Network requests minimized
 
-## 🔍 Troubleshooting
+<a name="-troubleshooting"></a>
 
-### Common Issues
+### Troubleshooting
+
+#### Common Issues
 
 **Script won't run**:
 - Check execution policy: `Get-ExecutionPolicy`
@@ -397,7 +431,7 @@ The script executes in five main phases:
 - Check if registry path exists
 - Verify system compatibility
 
-### Log Analysis
+#### Log Analysis
 
 Check the log file for detailed information:
 ```powershell
@@ -408,7 +442,29 @@ Get-Content .\postinstall.log | Select-String "ERROR"
 Get-Content .\postinstall.log | Select-String "SUMMARY" -A 10
 ```
 
-## 🤝 Contributing
+<a name="-support"></a>
+
+### Getting help
+
+For issues, questions, or contributions:
+1. Check the troubleshooting section
+2. Review the log files
+3. Open an issue with detailed information
+4. Include configuration and log files when relevant
+
+<a name="-additional-resources"></a>
+
+### Additional Resources
+
+- [PowerShell Documentation](https://docs.microsoft.com/powershell/)
+- [WinGet Documentation](https://docs.microsoft.com/windows/package-manager/)
+- [Winget Create Documentation](https://github.com/microsoft/winget-create/)
+- [Chocolatey Documentation](https://docs.chocolatey.org/)
+- [Scoop Documentation](https://scoop.sh/)
+
+## Contributing
+
+<a name="-contributing"></a>
 
 ### Code Standards
 - Follow PowerShell best practices
@@ -426,23 +482,13 @@ Get-Content .\postinstall.log | Select-String "SUMMARY" -A 10
 - Include updated documentation
 - Test thoroughly before submission
 
-## 🆘 Support
+Please include enough context to reproduce a problem or review a change.
 
-For issues, questions, or contributions:
-1. Check the troubleshooting section
-2. Review the log files
-3. Open an issue with detailed information
-4. Include configuration and log files when relevant
+## Support
 
-## 📚 Additional Resources
+Ko-fi supports Mattia / MrColorRain's work across projects.
 
-- [PowerShell Documentation](https://docs.microsoft.com/powershell/)
-- [WinGet Documentation](https://docs.microsoft.com/windows/package-manager/)
-- [Winget Create Documentation](https://github.com/microsoft/winget-create/)
-- [Chocolatey Documentation](https://docs.chocolatey.org/)
-- [Scoop Documentation](https://scoop.sh/)
-
-## 🫶 Support the Projects
+<a name="-support-the-projects"></a>
 
 Your contributions are vital in helping to sustain the development of open-source projects and tools made freely available to everyone. If you find value in my work and wish to show your support, kindly consider making a donation:
 
@@ -462,13 +508,20 @@ Your contribution helps me keep building, testing and sharing useful work. Explo
 
 Your support, no matter how small, is enormously appreciated and directly fuels ongoing and future developments. Thank you for your generosity! 🙏
 
-## ⚠️ Disclaimer
+See the [supporters and sponsors directory](https://github.com/MRColorR/MRColorR/blob/main/SPONSORS.md) for acknowledgments.
+
+## License
+
+<a name="-license"></a>
+
+This project is open source and available under the GPL 3.0 license.
+
+<a name="️-disclaimer"></a>
+
+### Disclaimer
+
 This project and its artifacts are provided "as is" and without warranty of any kind.
 
 The author makes no warranties, express or implied, that this script is free of errors, defects, or suitable for any particular purpose.
 
 The author shall not be held liable for any damages suffered by any user of this script, whether direct, indirect, incidental, consequential, or special, arising from the use of or inability to use this script or its documentation, even if the author has been advised of the possibility of such damages.
-
-## 📄 License
-
-This project is open source and available under the GPL 3.0 license.
