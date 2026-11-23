@@ -6,9 +6,13 @@
 
 [**🚀 See setup instructions**](#getting-started) · [📚 Documentation](#documentation) · [🫶 Support](#support)
 
-**Leave a star ⭐ if you like this project 🙂 Thank you!**
+<p align="center">
+  <strong>Leave a star ⭐ if you like this project 🙂 Thank you!</strong>
+</p>
 
-## Overview
+<a name="overview"></a>
+
+## 🔍 Overview
 
 A comprehensive PowerShell-based automation solution for Windows post-installation tasks, designed with software engineering best practices including modular architecture, comprehensive logging, error handling, and JSON-driven configuration.
 
@@ -29,7 +33,9 @@ A comprehensive PowerShell-based automation solution for Windows post-installati
 - **Multi-Provider Support**: Automatic package manager installation when needed
 - **Extensive Documentation**: Comprehensive inline documentation and comments
 
-## Getting started
+<a name="getting-started"></a>
+
+## 🚥 Getting started
 
 <a name="-prerequisites"></a>
 
@@ -80,7 +86,9 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Start-Process PowerShell -Verb RunAs -ArgumentList "-File .\post_install.ps1"
 ```
 
-## Documentation
+<a name="documentation"></a>
+
+## 📚 Documentation
 
 <a name="-configuration-guide"></a>
 
@@ -466,7 +474,9 @@ For issues, questions, or contributions:
 - [Chocolatey Documentation](https://docs.chocolatey.org/)
 - [Scoop Documentation](https://scoop.sh/)
 
-## Contributing
+<a name="contributing"></a>
+
+## 🤝 Contributing
 
 <a name="-contributing"></a>
 
@@ -490,7 +500,9 @@ Please include enough context to reproduce a problem or review a change.
 
 <a name="-support-the-projects"></a>
 
-## Support
+<a name="support"></a>
+
+## 🫶 Support
 
 **🫶 Support the project**
 
@@ -500,7 +512,9 @@ Your contributions are vital in helping to sustain the development of open-sourc
 
 Thank you for helping me keep building and sharing! 🙏 See the [supporter directory](https://github.com/MRColorR/MRColorR/blob/main/SUPPORTERS.md).
 
-## License
+<a name="license"></a>
+
+## 📄 License
 
 <a name="-license"></a>
 
